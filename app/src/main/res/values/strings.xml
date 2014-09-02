@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="menu">
+        <item>Pulse</item>
+        <item>Profile</item>
+        <item>Call Police</item>
+        <item>My Videos</item>
+        <item>About</item>
+    </string-array>
+
+    <array name="menu_icon">
+        <item>@drawable/ic_pulse</item>
+        <item>@drawable/ic_profile</item>
+        <item>@drawable/ic_call</item>
+        <item>@drawable/ic_videos</item>
+        <item>@drawable/ic_about</item>
+    </array>
+
+    <string name="app_name">Pulse</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_signup_menu">SignupMenu</string>
+    <string name="title_activity_sign_up">SignUp</string>
+    <string name="title_activity_menu">Menu</string>
+    <string name="title_activity_main_menu">MainMenu</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="desc_list_item_icon">Description of List Item</string>
+    <string name="title_activity_earphone">Earphone</string>
+    <string name="title_activity_touch">Touch</string>
+
+</resources>

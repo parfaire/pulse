@@ -1,0 +1,23 @@
+1.cd to particular dir
+2.git init
+3.git add .		(.=all files)
+4.git commit -m message
+
+
+add repo
+git remote add origin url
+
+push
+git push origin master
+
+pull
+git pull origin master
+
+
+
+ssh-keygen
+ssh-keygen -t rsa
+cat ~/.ssh/id_rsa.pub
+
+-remove
+git rm file.txt
