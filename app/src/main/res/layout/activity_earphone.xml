@@ -34,4 +34,13 @@
         android:layout_toLeftOf="@+id/tvStatus"
         android:layout_toStartOf="@+id/tvStatus" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/btnCancel"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="45dp" />
+
 </RelativeLayout>

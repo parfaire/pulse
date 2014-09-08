@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -22,8 +23,18 @@ public class Earphone extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_earphone);
+        btnCancel = (Button) findViewById(R.id.btnCancel);
         tvStatus = (TextView) findViewById(R.id.tvStatus);
         myReceiver = new MusicIntentReceiver();
+        Intent i= new Intent(getApplicationContext(), ServiceNotif.class);
+        startService(i);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),Passcode.class);
+                startActivity(i);
+            }
+        });
     }
 
     private class MusicIntentReceiver extends BroadcastReceiver {
