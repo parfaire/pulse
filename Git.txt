@@ -21,3 +21,4 @@ cat ~/.ssh/id_rsa.pub
 
 -remove
 git rm file.txt
+git add -u

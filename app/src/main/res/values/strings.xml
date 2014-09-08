@@ -31,5 +31,6 @@
     <string name="title_activity_touch">Touch</string>
     <string name="title_activity_countdown">Countdown</string>
     <string name="title_activity_send_notif">SendNotif</string>
+    <string name="title_activity_passcode">Passcode</string>
 
 </resources>

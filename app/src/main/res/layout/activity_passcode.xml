@@ -1,0 +1,198 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.santoso.pramudita.pulse.Passcode">
+
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <TextView
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#ffffff"
+        android:text="ENTER PASSCODE\nTO CANCEL"
+        android:id="@+id/textView" />
+
+    <EditText
+        android:gravity="center"
+        android:padding="5dp"
+        android:textSize="48sp"
+        android:id="@+id/edPassword"
+        android:inputType="textPassword"
+        android:textColor="#ffffff"
+        android:background="@drawable/roundededittext"
+        android:layout_width="90sp"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <Button
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/circlebutton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textColor="#ffffff"
+            android:text="1"
+            android:id="@+id/btn1">
+            <requestFocus/>
+            </Button>
+
+        <Button
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/circlebutton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textColor="#ffffff"
+            android:text="2"
+            android:id="@+id/btn2" />
+
+        <Button
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/circlebutton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textColor="#ffffff"
+            android:text="3"
+            android:id="@+id/btn3" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/linearLayout">
+
+        <Button
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/circlebutton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textColor="#ffffff"
+            android:text="4"
+            android:id="@+id/btn4" />
+
+        <Button
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/circlebutton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textColor="#ffffff"
+            android:text="5"
+            android:id="@+id/btn5" />
+
+        <Button
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/circlebutton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textColor="#ffffff"
+            android:text="6"
+            android:id="@+id/btn6" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/linearLayout2" >
+
+        <Button
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/circlebutton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textColor="#ffffff"
+            android:text="7"
+            android:id="@+id/btn7" />
+
+        <Button
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/circlebutton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textColor="#ffffff"
+            android:text="8"
+            android:id="@+id/btn8" />
+
+        <Button
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/circlebutton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textColor="#ffffff"
+            android:text="9"
+            android:id="@+id/btn9" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/linearLayout3" >
+
+        <Button
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/circlebutton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textColor="#ffffff"
+            android:text="DEL"
+            android:id="@+id/btnDel" />
+
+        <Button
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/circlebutton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textColor="#ffffff"
+            android:text="0"
+            android:id="@+id/btn0" />
+
+        <Button
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/circlebutton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textColor="#ffffff"
+            android:text="GO"
+            android:id="@+id/btnGo" />
+    </LinearLayout>
+</LinearLayout>
+</RelativeLayout>
