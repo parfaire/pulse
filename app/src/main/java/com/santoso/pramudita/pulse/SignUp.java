@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 
 public class SignUp extends Activity {
@@ -12,6 +13,9 @@ public class SignUp extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        ImageView img = (ImageView)findViewById(R.id.ivPhoto);
+        img.setImageResource(R.drawable.profile_picture);
     }
 
 
