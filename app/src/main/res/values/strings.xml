@@ -29,5 +29,7 @@
     <string name="desc_list_item_icon">Description of List Item</string>
     <string name="title_activity_earphone">Earphone</string>
     <string name="title_activity_touch">Touch</string>
+    <string name="title_activity_countdown">Countdown</string>
+    <string name="title_activity_send_notif">SendNotif</string>
 
 </resources>

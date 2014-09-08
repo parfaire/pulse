@@ -40,6 +40,14 @@
             android:name=".Touch"
             android:label="@string/title_activity_touch" >
         </activity>
+        <activity
+            android:name=".Countdown"
+            android:label="@string/title_activity_countdown" >
+        </activity>
+        <activity
+            android:name=".SendNotif"
+            android:label="@string/title_activity_send_notif" >
+        </activity>
     </application>
 
 </manifest>

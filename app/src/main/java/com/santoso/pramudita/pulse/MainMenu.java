@@ -3,8 +3,10 @@ package com.santoso.pramudita.pulse;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -17,10 +19,8 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import info.androidhive.slidingmenu.fragment.AboutFragment;
-import info.androidhive.slidingmenu.fragment.CallFragment;
-import info.androidhive.slidingmenu.fragment.HomeFragment;
 import info.androidhive.slidingmenu.adapter.NavDrawerListAdapter;
+import info.androidhive.slidingmenu.fragment.HomeFragment;
 import info.androidhive.slidingmenu.fragment.ProfileFragment;
 import info.androidhive.slidingmenu.fragment.VideoFragment;
 import info.androidhive.slidingmenu.model.NavDrawerItem;
@@ -48,7 +48,7 @@ public class MainMenu extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        mTitle = mDrawerTitle = getTitle();
+        mTitle = mDrawerTitle = "Pulse";
         // load slide menu items
         navMenuTitles = getResources().getStringArray(R.array.menu);
         // nav drawer icons from resources
@@ -126,13 +126,15 @@ public class MainMenu extends Activity {
                 fragment = new ProfileFragment();
                 break;
             case 2:
-                fragment = new CallFragment();
-                break;
+                Intent callPolice = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:000"));
+                startActivity(callPolice);
             case 3:
                 fragment = new VideoFragment();
                 break;
             case 4:
-                fragment = new AboutFragment();
+                Uri uriUrl = Uri.parse("http://www.google.com");
+                Intent launchBrowser = new Intent(Intent.ACTION_VIEW,uriUrl);
+                startActivity(launchBrowser);
                 break;
             default:
                 break;
