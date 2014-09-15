@@ -7,7 +7,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.widget.Toast;
 
 /**
  * Created by Gembloth on 9/8/2014.
@@ -21,7 +20,7 @@ public class ServiceNotif extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         //TODO do something useful
-        Toast.makeText(this, "Service Started", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Service Started", Toast.LENGTH_LONG).show();
         ss();
         return Service.START_STICKY;
     }
@@ -53,6 +52,5 @@ public class ServiceNotif extends Service {
         notification.setLatestEventInfo(context, contentTitle, contentText,contentIntent);
         notification.flags = Notification.FLAG_ONGOING_EVENT;
         notificationManager.notify(NOTIFICATION, notification);
-        //Toast.makeText(this, "Started!", Toast.LENGTH_LONG);
     }
 }

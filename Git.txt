@@ -12,7 +12,10 @@ git push origin master
 
 pull
 git pull origin master
-
+-kalo error
+git stash
+git pull origin master
+git stash apply
 
 
 ssh-keygen

@@ -47,6 +47,9 @@ public class Passcode extends Activity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), ServiceNotif.class);
                 stopService(i);
+                Intent returnIntent = new Intent(getApplicationContext(), ServiceNotif.class);
+                setResult(RESULT_OK,returnIntent);
+                finish();
             }
         });
         btnDel.setOnClickListener(new View.OnClickListener() {

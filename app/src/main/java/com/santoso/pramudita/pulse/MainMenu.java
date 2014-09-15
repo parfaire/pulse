@@ -128,6 +128,7 @@ public class MainMenu extends Activity {
             case 2:
                 Intent callPolice = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:000"));
                 startActivity(callPolice);
+                break;
             case 3:
                 fragment = new VideoFragment();
                 break;

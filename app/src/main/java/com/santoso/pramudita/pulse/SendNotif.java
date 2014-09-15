@@ -23,6 +23,9 @@ public class SendNotif extends Activity {
                 startActivity(i);
             }
         });
+        //Stop earphone service
+        Intent i = new Intent(getApplicationContext(), ServiceNotif.class);
+        stopService(i);
         //NOTIFY THE CALL CENTER
     }
 

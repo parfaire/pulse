@@ -31,7 +31,6 @@ public class Countdown extends Activity {
         timerCount.start();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -57,10 +56,11 @@ public class Countdown extends Activity {
         }
 
         @Override
-        public void onFinish() {
+        public void onFinish(){
             tvCount.setText("FINISH");
             Intent i = new Intent(getApplicationContext(),SendNotif.class);
             startActivity(i);
+            finish();
         }
 
         @Override

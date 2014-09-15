@@ -31,10 +31,20 @@ public class Earphone extends Activity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),Passcode.class);
-                startActivity(i);
+            Intent i = new Intent(getApplicationContext(),Passcode.class);
+            startActivityForResult(i,1);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==1){
+            if(resultCode==RESULT_OK){
+                finish();
+            }
+        }
     }
 
     private class MusicIntentReceiver extends BroadcastReceiver {
