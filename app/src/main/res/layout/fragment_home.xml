@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:layout_margin="50dp"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:id="@+id/linearLayout"
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+<LinearLayout
+    android:layout_marginTop="50dp"
+    android:layout_marginBottom="50dp"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/linearLayout"
+    >
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:paddingTop="30dp"
         android:paddingBottom="30dp"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/border"
         android:id="@+id/linearLayoutTouch" >
 
         <ImageView
@@ -37,12 +47,13 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Touch Pulse"
-                android:textSize="25sp"
-                android:id="@+id/tvStatus" />
+                style="@style/tvTriggerHeader"
+                android:id="@+id/textViewtouch" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/tvTriggerBody"
                 android:text="Release your phone to delcare an emergency"
                 android:id="@+id/textView2" />
 
@@ -54,9 +65,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:paddingTop="30dp"
         android:paddingBottom="30dp"
-        android:background="@drawable/border"
         android:id="@+id/linearLayoutEarphone" >
 
         <ImageView
@@ -77,15 +89,26 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Earphone Pulse"
-                android:textSize="25sp"
+                style="@style/tvTriggerHeader"
                 android:id="@+id/textView3" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/tvTriggerBody"
                 android:text="Remove your headset to delcare an emergency"
                 android:id="@+id/textView4" />
 
         </LinearLayout>
     </LinearLayout>
+
+
 </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:id="@+id/btnStart"
+        android:background="#888888"
+        android:layout_gravity="bottom" />
+</FrameLayout>

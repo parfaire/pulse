@@ -5,11 +5,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -22,6 +23,10 @@ public class Earphone extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Remove title bar
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //Remove notification bar
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_earphone);
         btnCancel = (Button) findViewById(R.id.btnCancel);
         tvStatus = (TextView) findViewById(R.id.tvStatus);
@@ -53,8 +58,6 @@ public class Earphone extends Activity {
                 int state = intent.getIntExtra("state", -1);
                 switch (state) {
                     case 0:
-                        tvStatus.setText("UNPLUGGED");
-                        tvStatus.setTextColor(Color.RED);
                         if(flag){
                             Intent i = new Intent(getApplicationContext(),Countdown.class);
                             startActivity(i);
@@ -62,14 +65,9 @@ public class Earphone extends Activity {
                         }
                         break;
                     case 1:
-                        tvStatus.setText("PLUGGED");
-                        tvStatus.setTextColor(Color.GREEN);
+                        tvStatus.setText("Your headphones are\nplugged in successfully");
                         flag=true;
                         break;
-                    default:
-                        tvStatus.setText("-");
-                        tvStatus.setTextColor(Color.BLACK);
-                        flag=false;
                 }
             }
         }

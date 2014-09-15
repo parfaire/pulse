@@ -2,6 +2,7 @@
 <resources>
     <item name="desc_list_item_icon" type="color">#00000000</item>
     <item name="list_background" type="color">#00000000</item>
+    <item name="list_background_selected" type="color">#0242B0</item>
     <item name="list_item_title" type="color">#FFFFFFFF</item>
     <item name="counter_text_color" type="color">#00000000</item>
     <item name="counter_text_bg" type="color">#FFFFFFFF</item>

@@ -2,9 +2,15 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+        <item name="android:actionBarStyle">@style/abStyle</item>
+        <item name="android:textViewStyle">@style/tvStyle</item>
+        <item name="android:buttonStyle">@style/btnStyle</item>
+        <item name="android:editTextStyle">@style/edStyle</item>
     </style>
+    <!-- Color -->
     <color name="custom_theme_color">#aa111111</color>
+    <color name="pulseblue">#428CFF</color>
+
     <style name="Theme.Transparent" parent="android:Theme">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@color/custom_theme_color</item>
@@ -14,4 +20,41 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
+    <!-- ActionBar styles -->
+    <style name="abStyle" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/pulseblue</item>
+    </style>
+
+    <style name="tvStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="btnStyle" parent="android:Widget.Holo.Button">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="edStyle" parent="android:Widget.Holo.EditText">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+    <style name="tvTriggerHeader">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="tvTriggerBody">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#92A4AE</item>
+    </style>
+    <style name="tvTriggerStandByFont">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+    <style name="tvDrawer">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">17sp</item>
+    </style>
 </resources>

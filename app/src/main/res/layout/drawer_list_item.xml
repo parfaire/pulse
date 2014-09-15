@@ -6,11 +6,11 @@
 
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="25dp"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="15dp"
         android:contentDescription="@string/desc_list_item_icon"
         android:src="@drawable/ic_pulse"
         android:layout_centerVertical="true" />
@@ -23,6 +23,7 @@
         android:minHeight="?android:attr/listPreferredItemHeightSmall"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:textColor="@color/list_item_title"
+        style="@style/tvDrawer"
         android:gravity="center_vertical"
         android:paddingRight="40dp" />
 
