@@ -8,6 +8,7 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -26,6 +28,7 @@ import info.androidhive.slidingmenu.fragment.VideoFragment;
 import info.androidhive.slidingmenu.model.NavDrawerItem;
 
 public class MainMenu extends Activity {
+    boolean flagback;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -47,7 +50,7 @@ public class MainMenu extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-
+        flagback=false;
         mTitle = mDrawerTitle = "Pulse";
         // load slide menu items
         navMenuTitles = getResources().getStringArray(R.array.menu);
@@ -215,5 +218,32 @@ public class MainMenu extends Activity {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+    @Override
+    public void onBackPressed() {
+        if(flagback){
+            finish();
+        }else{
+            flagback=true;
+            Toast.makeText(getApplicationContext(),"Press back once again to exit",Toast.LENGTH_SHORT).show();
+            MyCount timer = new MyCount(2500,1000);
+            timer.start();
+        }
+    }
+
+    //timer class to refresh the flagback value
+    public class MyCount extends CountDownTimer {
+        public MyCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onFinish(){
+            flagback=false;
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+        }
     }
 }

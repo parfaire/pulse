@@ -81,7 +81,7 @@ public class Cover extends Activity {
         tvPasscode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                i = new Intent(getApplicationContext(), SignupMenu.class);
+                i = new Intent(getApplicationContext(), PasscodeConfiguration.class);
                 startActivity(i);
             }
         });

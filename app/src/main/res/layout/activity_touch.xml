@@ -3,9 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#428CFF"
+    android:id="@+id/frameLayout"
     tools:context="com.santoso.pramudita.pulse.Touch">
 
     <TextView
+        android:id="@+id/tvStatus"
         android:layout_marginTop="-20dp"
         android:layout_gravity="center"
         android:gravity="center"

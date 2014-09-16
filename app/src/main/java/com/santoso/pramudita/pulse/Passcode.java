@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,15 +21,16 @@ public class Passcode extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passcode);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         edPassword = (EditText) findViewById(R.id.edPassword);
         edPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if(actionId== EditorInfo.IME_ACTION_DONE){
-                    Intent i = new Intent(getApplicationContext(), ServiceNotif.class);
+                    //stop send notif service
+                    Intent i = new Intent(getApplicationContext(), EarphoneService.class);
                     stopService(i);
-                    Intent returnIntent = new Intent(getApplicationContext(), ServiceNotif.class);
-                    setResult(RESULT_OK,returnIntent);
+                    setResult(RESULT_OK,i);
                     finish();
                 }
                 return false;

@@ -1,34 +1,33 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="#428CFF"
     tools:context="com.santoso.pramudita.pulse.Countdown">
-
-    TextView
-        android:text="@string/hello_world"
+    <TextView
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center_horizontal"
+        android:text="DECLARING EMERGENCY"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
+        android:layout_height="wrap_content"
+        style="@style/tvTriggerStandByFont"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="-"
-        android:id="@+id/tvCount"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="144dp" />
+        android:textSize="250sp"
+        android:textColor="#ffffff"
+        android:text="5"
+        android:layout_gravity="center"
+        android:id="@+id/tvCount" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Cancel"
         android:id="@+id/btnCancel"
+        style="@style/tvTriggerStandByFont"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="79dp" />
-</RelativeLayout>
+        android:background="#6BBDFF"
+        android:layout_gravity="bottom" />
+</FrameLayout>

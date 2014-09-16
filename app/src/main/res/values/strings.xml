@@ -32,5 +32,6 @@
     <string name="title_activity_countdown">Countdown</string>
     <string name="title_activity_send_notif">SendNotif</string>
     <string name="title_activity_passcode">Passcode</string>
+    <string name="title_activity_passcode_configuration">PasscodeConfiguration</string>
 
 </resources>

@@ -6,27 +6,51 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 
 
 public class SendNotif extends Activity {
     Button btnCancel;
+    String trigger;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Remove title bar
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //Remove notification bar
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_send_notif);
         btnCancel = (Button) findViewById(R.id.btnCancel);
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(),Passcode.class);
-                startActivity(i);
+                startActivityForResult(i,1);
             }
         });
-        //Stop earphone service
-        Intent i = new Intent(getApplicationContext(), ServiceNotif.class);
-        stopService(i);
+        trigger = getIntent().getStringExtra("trigger");
+        if (trigger.equals("EARPHONE")) {
+            //Stop earphone service
+            Intent i = new Intent(getApplicationContext(), EarphoneService.class);
+            stopService(i);
+        }
         //NOTIFY THE CALL CENTER
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==1){
+            if(resultCode==RESULT_OK){
+                if(trigger.equals("EARPHONE")) {
+                    Intent i = new Intent(getApplicationContext(), EarphoneService.class);
+                    startService(i);
+                }
+                finish();
+            }
+        }
     }
 
     @Override
@@ -46,5 +70,8 @@ public class SendNotif extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public void onBackPressed() {
     }
 }

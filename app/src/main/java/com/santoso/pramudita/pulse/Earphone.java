@@ -1,10 +1,7 @@
 package com.santoso.pramudita.pulse;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,10 +13,9 @@ import android.widget.TextView;
 
 
 public class Earphone extends Activity {
-    private TextView tvStatus;
-    private MusicIntentReceiver myReceiver;
-    private boolean flag;
+    private static TextView tvStatus;
     private Button btnCancel;
+    private Intent i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,60 +26,20 @@ public class Earphone extends Activity {
         setContentView(R.layout.activity_earphone);
         btnCancel = (Button) findViewById(R.id.btnCancel);
         tvStatus = (TextView) findViewById(R.id.tvStatus);
-        myReceiver = new MusicIntentReceiver();
-        Intent i= new Intent(getApplicationContext(), ServiceNotif.class);
+        i= new Intent(getApplicationContext(), EarphoneService.class);
         startService(i);
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            Intent i = new Intent(getApplicationContext(),Passcode.class);
-            startActivityForResult(i,1);
+                Intent i = new Intent(getApplicationContext(), EarphoneService.class);
+                stopService(i);
+                finish();
             }
         });
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==1){
-            if(resultCode==RESULT_OK){
-                finish();
-            }
-        }
+    public static void setStatus(String s){
+        tvStatus.setText(s);
     }
-
-    private class MusicIntentReceiver extends BroadcastReceiver {
-        @Override public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(Intent.ACTION_HEADSET_PLUG)) {
-                int state = intent.getIntExtra("state", -1);
-                switch (state) {
-                    case 0:
-                        if(flag){
-                            Intent i = new Intent(getApplicationContext(),Countdown.class);
-                            startActivity(i);
-                            flag=false;
-                        }
-                        break;
-                    case 1:
-                        tvStatus.setText("Your headphones are\nplugged in successfully");
-                        flag=true;
-                        break;
-                }
-            }
-        }
-    }
-
-    @Override public void onResume() {
-        IntentFilter filter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
-        registerReceiver(myReceiver, filter);
-        super.onResume();
-    }
-
-    @Override public void onPause() {
-        unregisterReceiver(myReceiver);
-        super.onPause();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -101,5 +57,8 @@ public class Earphone extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public void onBackPressed() {
     }
 }

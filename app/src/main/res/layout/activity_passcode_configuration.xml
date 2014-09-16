@@ -1,0 +1,62 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="100dp"
+    android:background="#428CFF">
+    <EditText
+        android:padding="5dp"
+        android:textSize="40sp"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:gravity="center"
+        android:background="@drawable/roundededittext"
+        android:imeOptions="actionNext"
+        android:cursorVisible="false"
+        android:singleLine="true"
+        android:id="@+id/edOld"
+        android:inputType="numberPassword"
+        android:maxLength="4"
+        android:hint="Old" />
+
+    <EditText
+        android:textSize="40sp"
+        android:cursorVisible="false"
+        android:padding="5dp"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:gravity="center"
+        android:background="@drawable/roundededittext"
+        android:imeOptions="actionNext"
+        android:singleLine="true"
+        android:id="@+id/edNew"
+        android:inputType="numberPassword"
+        android:maxLength="4"
+        android:hint="New" />
+
+    <EditText
+        android:textSize="40sp"
+        android:cursorVisible="false"
+        android:padding="5dp"
+        android:layout_height="wrap_content"
+        android:layout_width="150sp"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:gravity="center"
+        android:inputType="numberPassword"
+        android:background="@drawable/roundededittext"
+        android:id="@+id/edNew2"
+        android:imeOptions="actionDone"
+        android:singleLine="true"
+        android:maxLength="4"
+        android:hint="Confirm"/>
+
+</LinearLayout>
