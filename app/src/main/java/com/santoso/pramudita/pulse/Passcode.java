@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 
 public class Passcode extends Activity {
+    Intent i;
     EditText edPassword;
     Button btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9,btn0,btnDel,btnGo;
     @Override
@@ -22,14 +23,15 @@ public class Passcode extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passcode);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        i=getIntent();
         edPassword = (EditText) findViewById(R.id.edPassword);
         edPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if(actionId== EditorInfo.IME_ACTION_DONE){
                     //stop send notif service
-                    Intent i = new Intent(getApplicationContext(), EarphoneService.class);
-                    stopService(i);
+                    Intent newIn = new Intent(getApplicationContext(), EarphoneService.class);
+                    stopService(newIn);
                     setResult(RESULT_OK,i);
                     finish();
                 }

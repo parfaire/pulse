@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.santoso.pramudita.pulse.WebService.Login;
+
 
 public class Cover extends Activity {
     Button btnLogin;
@@ -67,8 +69,7 @@ public class Cover extends Activity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                i = new Intent(getApplicationContext(), MainMenu.class);
-                startActivity(i);
+                login();
             }
         });
         tvSignUp.setOnClickListener(new View.OnClickListener() {
@@ -105,5 +106,14 @@ public class Cover extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    private void login() {
+        try {
+            String un, pw;
+            un = edEmail.getText().toString();
+            pw = edPassword.getText().toString();
+            new Login(getApplicationContext()).execute(un,pw);
+
+        }catch(Exception e){}
     }
 }

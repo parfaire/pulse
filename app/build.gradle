@@ -1,25 +1,39 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'PulseKey'
+            keyPassword '690902'
+            storeFile file('C:/Users/Gembloth/AndroidStudioProjects/Pulse.jks')
+            storePassword '690902'
+        }
+    }
     compileSdkVersion 19
-    buildToolsVersion "20.0.0"
-
+    buildToolsVersion '20.0.0'
     defaultConfig {
-        applicationId "com.santoso.pramudita.pulse"
+        applicationId 'com.santoso.pramudita.pulse'
         minSdkVersion 16
         targetSdkVersion 19
         versionCode 1
-        versionName "1.0"
+        versionName '1.0'
     }
     buildTypes {
         release {
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
+        debug {
+            signingConfig signingConfigs.config
+        }
+    }
+    productFlavors {
     }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:support-v4:19.+'
+    compile 'com.google.android.gms:play-services:5.0.89'
 }
