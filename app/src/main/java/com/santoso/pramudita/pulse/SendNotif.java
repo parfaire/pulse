@@ -10,6 +10,7 @@ import android.location.LocationManager;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +28,8 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.santoso.pramudita.pulse.Background.EarphoneService;
+import com.santoso.pramudita.pulse.Background.LocationService;
 
 import java.io.IOException;
 import java.util.Date;
@@ -37,26 +40,37 @@ public class SendNotif extends Activity implements SurfaceHolder.Callback  {
     private String trigger;
     private SurfaceHolder surfaceHolder;
     private SurfaceView surfaceView;
-    public MediaRecorder mrec = new MediaRecorder();
+    private MediaRecorder mrec = new MediaRecorder();
     private Camera mCamera;
+    private MarkerOptions mOpt;
+    private Marker marker;
+    private GoogleMap gMap;
+    private Context ctx;
+    private LocationManager lm;
+    private boolean isGPSEnabled,isNetworkEnabled;
     private double lat,lng;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         //Remove title bar
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_send_notif);
+        ctx=this;
+
         //set cancel listener
         btnCancel = (Button) findViewById(R.id.btnCancel);
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),Passcode.class);
+                Intent i = new Intent(ctx,Passcode.class);
                 startActivityForResult(i, 1);
             }
         });
+
         //stop earphone service if the trigger is service
         trigger = getIntent().getStringExtra("trigger");
         if (trigger.equals("EARPHONE")) {
@@ -66,18 +80,16 @@ public class SendNotif extends Activity implements SurfaceHolder.Callback  {
         }
 
         //SET THE MAP
-        LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        lng = 144.962979600000040000;
-        lat = -37.813186900000000000;
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-
-        LatLng currentPlace = new LatLng(lat,lng);
-        GoogleMap mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
-        MarkerOptions a = new MarkerOptions().position(currentPlace);
-        Marker m = mMap.addMarker(a);
-        m.setPosition(currentPlace);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPlace,15));
+        lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        gMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+        // getting GPS & Network status
+        isGPSEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        isNetworkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        if (isNetworkEnabled){
+            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        }else if(isGPSEnabled){
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        }
 
         //RECORDING
         try {
@@ -87,14 +99,23 @@ public class SendNotif extends Activity implements SurfaceHolder.Callback  {
             surfaceHolder.addCallback(this);
             surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         }catch(Exception e){}
-
-        //NOTIFY THE CALL CENTER
     }
     private final LocationListener locationListener = new LocationListener() {
         public void onLocationChanged(Location location) {
             lng = location.getLongitude();
             lat = location.getLatitude();
-            Toast.makeText(getApplicationContext(),"Latitude:" + lat + ", Longitude:" + lng,Toast.LENGTH_SHORT).show();
+            LatLng currentPlace = new LatLng(lat,lng);
+            mOpt = new MarkerOptions().position(currentPlace);
+            marker = gMap.addMarker(mOpt);
+            marker.setPosition(currentPlace);
+            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPlace,15));
+            lm.removeUpdates(this);
+            //NOTIFY THE CALL CENTER
+            Intent i= new Intent(ctx, LocationService.class);
+            i.putExtra("trigger",trigger);
+            i.putExtra("lat",lat+"");
+            i.putExtra("lng",lng+"");
+            startService(i);
         }
         @Override
         public void onProviderDisabled(String provider) {}
@@ -115,7 +136,9 @@ public class SendNotif extends Activity implements SurfaceHolder.Callback  {
         if (mCamera != null){
            Camera.Parameters params = mCamera.getParameters();
            mCamera.setParameters(params);
-           try{startRecording();}catch(Exception e){}
+           try{startRecording();
+               Timer timer = new Timer(60000, 1000);
+           }catch(Exception e){}
         }
         else {
             Toast.makeText(getApplicationContext(), "Camera not available!", Toast.LENGTH_LONG).show();
@@ -131,14 +154,14 @@ public class SendNotif extends Activity implements SurfaceHolder.Callback  {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==1){
-            if(resultCode==RESULT_OK){
-                if(trigger.equals("EARPHONE")) {
-                    Intent i = new Intent(getApplicationContext(), EarphoneService.class);
-                    startService(i);
-                }
-                finish();
+        if(requestCode==1 && resultCode==RESULT_OK){
+            if(trigger.equals("EARPHONE")) {
+                Intent i = new Intent(getApplicationContext(), EarphoneService.class);
+                startService(i);
             }
+            Intent i = new Intent(getApplicationContext(), LocationService.class);
+            stopService(i);
+            finish();
         }
     }
 
@@ -189,5 +212,20 @@ public class SendNotif extends Activity implements SurfaceHolder.Callback  {
     }
     @Override
     public void onBackPressed() {
+    }
+
+    public class Timer extends CountDownTimer {
+        public Timer(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onFinish(){
+            stopRecording();
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+        }
     }
 }

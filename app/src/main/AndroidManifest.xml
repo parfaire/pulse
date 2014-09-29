@@ -70,6 +70,7 @@
         <activity
             android:name=".SendNotif"
             android:label="@string/title_activity_send_notif"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -80,8 +81,12 @@
         </activity>
 
         <service
-            android:name=".EarphoneService"
-            android:label="ServiceNotif" >
+            android:name=".Background.EarphoneService"
+            android:label="EarphoneService" >
+        </service>
+        <service
+            android:name=".Background.LocationService"
+            android:label="LocationService" >
         </service>
 
         <activity

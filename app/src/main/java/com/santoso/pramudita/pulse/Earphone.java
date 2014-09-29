@@ -11,6 +11,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.santoso.pramudita.pulse.Background.EarphoneService;
+
 
 public class Earphone extends Activity {
     private static TextView tvStatus;

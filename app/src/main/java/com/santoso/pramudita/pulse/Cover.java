@@ -1,7 +1,9 @@
 package com.santoso.pramudita.pulse;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -12,15 +14,19 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.santoso.pramudita.pulse.WebService.Login;
 
 
 public class Cover extends Activity {
-    Button btnLogin;
-    TextView tvSignUp,tvPasscode;
+    SharedPreferences prefs;
+    Button btnLogin,btnHome,btnLogout;
+    TextView tvSignUp,tvPasscode,tvInfo;
     EditText edEmail,edPassword;
+    LinearLayout container,containerlogin;
+    Context ctx;
     Intent i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,14 +34,20 @@ public class Cover extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cover);
+        ctx=this;
+        prefs = getSharedPreferences("PULSE", Context.MODE_PRIVATE);
         btnLogin = (Button) findViewById(R.id.btnLogin);
+        btnHome = (Button) findViewById(R.id.btnHome);
+        btnLogout = (Button) findViewById(R.id.btnLogout);
         tvSignUp = (TextView) findViewById(R.id.tvSignUp);
         tvPasscode = (TextView) findViewById(R.id.tvPasscode);
+        tvInfo  = (TextView) findViewById(R.id.tvInfo);
         edEmail = (EditText) findViewById(R.id.edEmail);
         edPassword = (EditText) findViewById(R.id.edPassword);
+        container = (LinearLayout) findViewById(R.id.container);
+        containerlogin = (LinearLayout) findViewById(R.id.containerlogin);
 
         edEmail.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -72,20 +84,42 @@ public class Cover extends Activity {
                 login();
             }
         });
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout();
+            }
+        });
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                i = new Intent(ctx, MainMenu.class);
+                startActivity(i);
+            }
+        });
+
         tvSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                i = new Intent(getApplicationContext(), SignupMenu.class);
+                i = new Intent(ctx, SignupMenu.class);
                 startActivity(i);
             }
         });
         tvPasscode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                i = new Intent(getApplicationContext(), PasscodeConfiguration.class);
+                i = new Intent(ctx, PasscodeConfiguration.class);
                 startActivity(i);
             }
         });
+        //preferences
+        if (prefs.contains("email")){
+            edEmail.setText(prefs.getString("email",""));
+            if (prefs.contains("password")){
+                edPassword.setText(prefs.getString("password",""));
+                btnLogin.performClick();
+            }
+        }
     }
 
 
@@ -112,8 +146,21 @@ public class Cover extends Activity {
             String un, pw;
             un = edEmail.getText().toString();
             pw = edPassword.getText().toString();
-            new Login(getApplicationContext()).execute(un,pw);
-
+            new Login(ctx).execute(un, pw);
         }catch(Exception e){}
     }
+    public void changeUIwhenLogin(){
+        tvInfo.setText("Welcome, "+edEmail.getText().toString());
+        containerlogin.setVisibility(View.VISIBLE);
+        container.setVisibility(View.GONE);
+    }
+
+    private void logout() {
+        container.setVisibility(View.VISIBLE);
+        containerlogin.setVisibility(View.GONE);
+        edEmail.setText("");
+        edPassword.setText("");
+        prefs.edit().clear().commit();
+    }
+
 }

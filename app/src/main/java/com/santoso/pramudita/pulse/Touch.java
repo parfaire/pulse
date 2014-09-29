@@ -1,6 +1,7 @@
 package com.santoso.pramudita.pulse;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,7 +19,9 @@ public class Touch extends Activity {
     Button btnCancel;
     TextView tvStatus;
     FrameLayout frameLayout;
+    String lat,lng;
     Intent i;
+    Context ctx;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +30,7 @@ public class Touch extends Activity {
         //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_touch);
+        ctx=this;
         frameLayout = (FrameLayout) findViewById(R.id.frameLayout);
         tvStatus = (TextView) findViewById(R.id.tvStatus);
         btnCancel = (Button) findViewById(R.id.btnCancel);
@@ -42,6 +46,7 @@ public class Touch extends Activity {
                 switch(event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         tvStatus.setText("Once you release the notification will be sent");
+                        //new SendLocation(ctx).execute(lat,lng,"1");
                         return true; // if you want to handle the touch event
                     case MotionEvent.ACTION_UP:
                         i = new Intent(getApplicationContext(),Countdown.class);

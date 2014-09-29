@@ -1,4 +1,4 @@
-package com.santoso.pramudita.pulse;
+package com.santoso.pramudita.pulse.Background;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -10,6 +10,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
 
+import com.santoso.pramudita.pulse.Countdown;
+import com.santoso.pramudita.pulse.Earphone;
+
 /**
  * Created by Gembloth on 9/8/2014.
  */
@@ -18,13 +21,9 @@ public class EarphoneService extends Service {
     private MusicIntentReceiver myReceiver = new MusicIntentReceiver();
     private NotificationManager notificationManager;
     private int NOTIFICATION = 1; //Any unique number for this notification
-    Notification.Builder builder = new Notification.Builder(this)
-            .setAutoCancel(false)
-            .setOngoing(true);
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         //TODO do something useful
-        //Toast.makeText(this, "Service Started", Toast.LENGTH_LONG).show();
         ss();
         IntentFilter filter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
         registerReceiver(myReceiver, filter);
@@ -55,8 +54,6 @@ public class EarphoneService extends Service {
         CharSequence contentText = "Service of earphones trigger is activated.";
         Intent notificationIntent = new Intent(this,Earphone.class); //add android:launchMode="singleTask" in manifest to not creating new activity
         notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //notificationIntent.setAction(Intent.ACTION_MAIN);
-        //notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
         notification.setLatestEventInfo(context, contentTitle, contentText,contentIntent);
         notification.flags = Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR;

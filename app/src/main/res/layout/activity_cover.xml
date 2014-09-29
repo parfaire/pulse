@@ -15,7 +15,49 @@
         android:src="@drawable/ic_launcher">
         <requestFocus/>
         </ImageView>
+    <LinearLayout
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:id="@+id/containerlogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:id="@+id/tvInfo"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="125sp"
+                android:layout_margin="10dp"
+                android:background="@drawable/roundedbutton"
+                android:layout_height="35dp"
+                android:text="Home"
+                android:textColor="#1e90ff"
+                android:id="@+id/btnHome" />
+            <Button
+                android:layout_width="125sp"
+                android:layout_margin="10dp"
+                android:background="@drawable/roundedbutton"
+                android:layout_height="35dp"
+                android:text="Logout"
+                android:textColor="#1e90ff"
+                android:id="@+id/btnLogout" />
+            </LinearLayout>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center"
+        android:id="@+id/container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <EditText
         android:padding="5dp"
         android:layout_width="300sp"
@@ -53,6 +95,8 @@
         android:text="Login"
         android:textColor="#1e90ff"
         android:id="@+id/btnLogin" />
+    </LinearLayout>
+
     <LinearLayout
         android:gravity="center"
         android:layout_marginTop="10dp"

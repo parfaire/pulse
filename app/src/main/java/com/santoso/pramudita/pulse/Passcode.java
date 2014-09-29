@@ -3,15 +3,13 @@ package com.santoso.pramudita.pulse;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+
+import com.santoso.pramudita.pulse.Background.EarphoneService;
 
 
 public class Passcode extends Activity {
@@ -22,10 +20,10 @@ public class Passcode extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passcode);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         i=getIntent();
         edPassword = (EditText) findViewById(R.id.edPassword);
-        edPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        /*edPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if(actionId== EditorInfo.IME_ACTION_DONE){
@@ -37,10 +35,9 @@ public class Passcode extends Activity {
                 }
                 return false;
             }
-        });
-        edPassword.requestFocus();
-        //edPassword.setEnabled(false);
-       /* btn0 = (Button) findViewById(R.id.btn0);
+        });*/
+        edPassword.setEnabled(false);
+        btn0 = (Button) findViewById(R.id.btn0);
         btn1 = (Button) findViewById(R.id.btn1);
         btn2 = (Button) findViewById(R.id.btn2);
         btn3 = (Button) findViewById(R.id.btn3);
@@ -66,9 +63,9 @@ public class Passcode extends Activity {
         btnGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), ServiceNotif.class);
-                stopService(i);
-                Intent returnIntent = new Intent(getApplicationContext(), ServiceNotif.class);
+                Intent newIn = new Intent(getApplicationContext(), EarphoneService.class);
+                stopService(newIn);
+                Intent returnIntent = new Intent(getApplicationContext(), SendNotif.class);
                 setResult(RESULT_OK,returnIntent);
                 finish();
             }
@@ -82,7 +79,7 @@ public class Passcode extends Activity {
                     edPassword.setText(text.substring(0, length - 1));
                 }
             }
-        });*/
+        });
     }
 
     private class myClick implements View.OnClickListener{
