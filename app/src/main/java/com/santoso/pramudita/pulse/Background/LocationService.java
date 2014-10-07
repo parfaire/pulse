@@ -25,7 +25,7 @@ import com.santoso.pramudita.pulse.WebService.UpdateEmergencyLocation;
 public class LocationService extends Service {
     private Context ctx;
     private Timer timer;
-    private String lat,lng,trigger,logid;
+    private String lat,lng,logid;
     private NotificationManager notificationManager;
     private LocationManager lm;
     private boolean isGPSEnabled,isNetworkEnabled;
@@ -37,8 +37,8 @@ public class LocationService extends Service {
         ss();
         lat = intent.getStringExtra("lat");
         lng = intent.getStringExtra("lng");
-        trigger = intent.getStringExtra("trigger");
-        new StartEmergency(ctx).execute(lat,lng,trigger);
+        logid = intent.getStringExtra("logid");
+        new StartEmergency(ctx).execute(lat,lng,logid);
         //getting GPS & Network status & update location
         lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         isGPSEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -56,7 +56,7 @@ public class LocationService extends Service {
     public void onDestroy() {
         super.onDestroy();
         lm.removeUpdates(locationListener);
-        new StopEmergency(getApplicationContext()).execute(logid);
+        new StopEmergency(getApplicationContext()).execute(logid,"no");
         notificationManager.cancel(NOTIFICATION);
     }
 
@@ -115,8 +115,4 @@ public class LocationService extends Service {
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) { }
     };
-
-    public void setLogId(String s){
-        logid=s;
-    }
 }

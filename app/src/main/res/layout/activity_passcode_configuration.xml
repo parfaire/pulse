@@ -5,7 +5,9 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingTop="100dp"
-    android:background="#428CFF">
+    android:background="#428CFF"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
     <EditText
         android:padding="5dp"
         android:textSize="40sp"

@@ -3,6 +3,7 @@ package com.santoso.pramudita.pulse;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.Camera;
 import android.location.Location;
 import android.location.LocationListener;
@@ -18,7 +19,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -36,6 +36,7 @@ import java.util.Date;
 
 
 public class SendNotif extends Activity implements SurfaceHolder.Callback  {
+    private SharedPreferences prefs;
     private Button btnCancel;
     private String trigger;
     private SurfaceHolder surfaceHolder;
@@ -56,8 +57,6 @@ public class SendNotif extends Activity implements SurfaceHolder.Callback  {
         //Remove title bar
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        //Remove notification bar
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_send_notif);
         ctx=this;
 
@@ -72,11 +71,15 @@ public class SendNotif extends Activity implements SurfaceHolder.Callback  {
         });
 
         //stop earphone service if the trigger is service
-        trigger = getIntent().getStringExtra("trigger");
-        if (trigger.equals("EARPHONE")) {
-            //Stop earphone service
-            Intent i = new Intent(getApplicationContext(), EarphoneService.class);
-            stopService(i);
+        try{
+            trigger = getIntent().getStringExtra("trigger");
+            if (trigger.equals("EARPHONE")) {
+                //Stop earphone service
+                Intent i = new Intent(getApplicationContext(), EarphoneService.class);
+                stopService(i);
+            }
+        }catch(Exception e){
+                e.printStackTrace();
         }
 
         //SET THE MAP
@@ -92,13 +95,13 @@ public class SendNotif extends Activity implements SurfaceHolder.Callback  {
         }
 
         //RECORDING
-        try {
+        /*try {
             mCamera = Camera.open();
             surfaceView = (SurfaceView) findViewById(R.id.surface_camera);
             surfaceHolder = surfaceView.getHolder();
             surfaceHolder.addCallback(this);
             surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        }catch(Exception e){}
+        }catch(Exception e){}*/
     }
     private final LocationListener locationListener = new LocationListener() {
         public void onLocationChanged(Location location) {
@@ -110,11 +113,13 @@ public class SendNotif extends Activity implements SurfaceHolder.Callback  {
             marker.setPosition(currentPlace);
             gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPlace,15));
             lm.removeUpdates(this);
-            //NOTIFY THE CALL CENTER
+            //NOTIFY THE CALL CENTER and get the ID
+            prefs = getSharedPreferences("PULSE",Context.MODE_PRIVATE);
+            String logid = prefs.getString("logid","");
             Intent i= new Intent(ctx, LocationService.class);
-            i.putExtra("trigger",trigger);
             i.putExtra("lat",lat+"");
             i.putExtra("lng",lng+"");
+            i.putExtra("logid",logid);
             startService(i);
         }
         @Override
@@ -197,6 +202,12 @@ public class SendNotif extends Activity implements SurfaceHolder.Callback  {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.send_notif, menu);
         return true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //stopRecording();
     }
 
     @Override

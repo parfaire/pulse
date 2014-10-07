@@ -30,7 +30,7 @@ public class UpdateEmergencyLocation extends AsyncTask<String,Void,String> {
             lat = arg0[0];
             lng = arg0[1];
             logid = arg0[2];
-            String link = Connection.url+"/stop.php";
+            String link = Connection.url+"/update.php";
             URL url = new URL(link);
             String data = URLEncoder.encode("lng", "UTF-8") + "=" + URLEncoder.encode(lng, "UTF-8");
             data += "&" + URLEncoder.encode("lat", "UTF-8") + "=" + URLEncoder.encode(lat, "UTF-8");

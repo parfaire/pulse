@@ -4,7 +4,6 @@
     <string-array name="menu">
         <item>Pulse</item>
         <item>Profile</item>
-        <item>Call Police</item>
         <item>My Videos</item>
         <item>About</item>
     </string-array>
@@ -12,7 +11,6 @@
     <array name="menu_icon">
         <item>@drawable/ic_pulse</item>
         <item>@drawable/ic_profile</item>
-        <item>@drawable/ic_call</item>
         <item>@drawable/ic_videos</item>
         <item>@drawable/ic_about</item>
     </array>

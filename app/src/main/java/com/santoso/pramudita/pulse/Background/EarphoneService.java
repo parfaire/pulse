@@ -8,15 +8,24 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
 import android.os.IBinder;
 
 import com.santoso.pramudita.pulse.Countdown;
 import com.santoso.pramudita.pulse.Earphone;
+import com.santoso.pramudita.pulse.WebService.ActiveEmergency;
 
 /**
  * Created by Gembloth on 9/8/2014.
  */
 public class EarphoneService extends Service {
+    private String trigger;
+    private LocationManager lm;
+    private boolean isGPSEnabled,isNetworkEnabled;
+    private double lat,lng;
     private boolean flag = false;
     private MusicIntentReceiver myReceiver = new MusicIntentReceiver();
     private NotificationManager notificationManager;
@@ -24,6 +33,7 @@ public class EarphoneService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         //TODO do something useful
+        trigger="EARPHONE";
         ss();
         IntentFilter filter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
         registerReceiver(myReceiver, filter);
@@ -67,21 +77,30 @@ public class EarphoneService extends Service {
                 switch (state) {
                     case 0:
                         try{
-                            Earphone.setStatus("Please plug in\nyour headphones");
+                            Earphone.setStatus("Please plug in\nyour headphones",false);
                         }catch(Exception e){
 
                         }
                         if(flag){
                             Intent i = new Intent(getApplicationContext(),Countdown.class);
                             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            i.putExtra("trigger", "EARPHONE");
+                            i.putExtra("trigger", trigger);
                             startActivity(i);
                             flag=false;
                         }
                         break;
                     case 1:
                         try{
-                            Earphone.setStatus("Your headphones are\nalready plugged in");
+                            // getting GPS & Network status
+                            lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+                            isGPSEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+                            isNetworkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+                            if (isNetworkEnabled){
+                                lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+                            }else if(isGPSEnabled){
+                                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+                            }
+                            Earphone.setStatus("Your headphones are\nalready plugged in",true);
                         }catch(Exception e){
 
                         }
@@ -91,4 +110,21 @@ public class EarphoneService extends Service {
             }
         }
     }
+    private final LocationListener locationListener = new LocationListener() {
+        public void onLocationChanged(Location location) {
+            lng = location.getLongitude();
+            lat = location.getLatitude();
+            lm.removeUpdates(this);
+            //NOTIFY THE CALL CENTER
+            new ActiveEmergency(getApplicationContext()).execute(lat + "", lng + "", trigger);
+        }
+        @Override
+        public void onProviderDisabled(String provider) {}
+
+        @Override
+        public void onProviderEnabled(String provider) {}
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) { }
+    };
 }

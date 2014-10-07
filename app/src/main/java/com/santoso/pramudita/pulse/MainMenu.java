@@ -28,6 +28,7 @@ import info.androidhive.slidingmenu.fragment.VideoFragment;
 import info.androidhive.slidingmenu.model.NavDrawerItem;
 
 public class MainMenu extends Activity {
+    private String logid;
     boolean flagback;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -60,16 +61,14 @@ public class MainMenu extends Activity {
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         navDrawerItems = new ArrayList<NavDrawerItem>();
         // adding nav drawer items to array
-        // Home
+        // Pulse
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
-        // Find People
+        // Profile
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
-        // Photos
+        // My Videos
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
-        // Communities, Will add a counter here
+        // About
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
-        // Pages
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
         // Recycle the typed array
         navMenuIcons.recycle();
         // setting the nav drawer list adapter
@@ -132,13 +131,9 @@ public class MainMenu extends Activity {
                 fragment = new ProfileFragment();
                 break;
             case 2:
-                Intent callPolice = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:000"));
-                startActivity(callPolice);
-                break;
-            case 3:
                 fragment = new VideoFragment();
                 break;
-            case 4:
+            case 3:
                 Uri uriUrl = Uri.parse("http://www.google.com");
                 Intent launchBrowser = new Intent(Intent.ACTION_VIEW,uriUrl);
                 startActivity(launchBrowser);
@@ -245,5 +240,11 @@ public class MainMenu extends Activity {
         @Override
         public void onTick(long millisUntilFinished) {
         }
+    }
+    public void setLogId(String s){
+        logid=s;
+    }
+    public String getLogId(){
+        return logid;
     }
 }

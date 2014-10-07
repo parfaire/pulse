@@ -1,12 +1,13 @@
 package com.santoso.pramudita.pulse;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,12 +15,18 @@ import android.widget.Toast;
 
 
 public class PasscodeConfiguration extends Activity {
+    SharedPreferences prefs;
+    String passcode;
     EditText edOld,edNew,edNew2;
+    Context ctx;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passcode_configuration);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        ctx = this;
+        prefs = getSharedPreferences("PULSE", Context.MODE_PRIVATE);
+        passcode = prefs.getString("passcode","0000");
         edOld = (EditText) findViewById(R.id.edOld);
         edNew = (EditText) findViewById(R.id.edNew);
         edNew2 = (EditText) findViewById(R.id.edNew2);
@@ -45,10 +52,36 @@ public class PasscodeConfiguration extends Activity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    Toast.makeText(getApplicationContext(), "Password has been changed successfully!", Toast.LENGTH_SHORT).show();
-                    finish();
+                    String old,new1,new2;
+                    old = edOld.getText().toString();
+                    new1 = edNew.getText().toString();
+                    new2 = edNew2.getText().toString();
+                    if(!old.equals(passcode)){
+                        Toast.makeText(ctx, "Old Passcode does not match", Toast.LENGTH_SHORT).show();
+                    }else if(!new1.equals(new2)){
+                        Toast.makeText(ctx, "Confirmation does not match", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(ctx, "Passcode has been changed successfully!", Toast.LENGTH_SHORT).show();
+                        //change passcode
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putString("passcode",new1);
+                        editor.commit();
+                        //new ChangePasscode(ctx).execute(new1);
+                        finish();
+                    }
                 }
                 return false;
+            }
+        });
+        edOld.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    edOld.setHint("");
+                }else{
+                    edOld.setHint("Old");
+                }
+
             }
         });
         edNew.setOnFocusChangeListener(new View.OnFocusChangeListener() {

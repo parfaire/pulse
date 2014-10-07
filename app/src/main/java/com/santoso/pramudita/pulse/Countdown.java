@@ -1,7 +1,9 @@
 package com.santoso.pramudita.pulse;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.TypedValue;
@@ -13,14 +15,17 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.santoso.pramudita.pulse.WebService.StopEmergency;
+
 
 public class Countdown extends Activity {
-    MyCount timerCount;
-    Animation animation;
-    TextView tvCount;
-    Button btnCancel;
-    String trigger;
-    float fulltextsize,textsize;
+    private SharedPreferences prefs;
+    private MyCount timerCount;
+    private Animation animation;
+    private TextView tvCount;
+    private Button btnCancel;
+    private String trigger;
+    private float fulltextsize,textsize;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +34,8 @@ public class Countdown extends Activity {
         //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_countdown);
+        prefs = getSharedPreferences("PULSE", Context.MODE_PRIVATE);
+        trigger = getIntent().getStringExtra("trigger");
         textsize=fulltextsize=250;
         tvCount = (TextView) findViewById(R.id.tvCount);
         btnCancel = (Button) findViewById(R.id.btnCancel);
@@ -37,10 +44,10 @@ public class Countdown extends Activity {
             public void onClick(View v) {
                 timerCount.cancel();
                 animation.cancel();
+                new StopEmergency(getApplicationContext()).execute(prefs.getString("logid",""),"no");
                 finish();
             }
         });
-        trigger = getIntent().getStringExtra("trigger");
         animation = new Animation(5500, 20);
         timerCount = new MyCount(5500, 1000);
         animation.start();

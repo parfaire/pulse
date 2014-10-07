@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.santoso.pramudita.pulse" >
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -59,6 +60,7 @@
         <activity
             android:name=".Touch"
             android:label="@string/title_activity_touch"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" >
         </activity>
         <activity

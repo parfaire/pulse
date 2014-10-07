@@ -1,19 +1,24 @@
 package com.santoso.pramudita.pulse;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.santoso.pramudita.pulse.Background.EarphoneService;
 
 
 public class Passcode extends Activity {
+    SharedPreferences prefs;
     Intent i;
+    String passcode;
     EditText edPassword;
     Button btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9,btn0,btnDel,btnGo;
     @Override
@@ -21,6 +26,8 @@ public class Passcode extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passcode);
         //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        prefs = getSharedPreferences("PULSE", Context.MODE_PRIVATE);
+        passcode = prefs.getString("passcode","0000");
         i=getIntent();
         edPassword = (EditText) findViewById(R.id.edPassword);
         /*edPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -63,11 +70,16 @@ public class Passcode extends Activity {
         btnGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent newIn = new Intent(getApplicationContext(), EarphoneService.class);
-                stopService(newIn);
-                Intent returnIntent = new Intent(getApplicationContext(), SendNotif.class);
-                setResult(RESULT_OK,returnIntent);
-                finish();
+                String pcode = edPassword.getText().toString();
+                if(passcode.equals(pcode)) {
+                    Intent newIn = new Intent(getApplicationContext(), EarphoneService.class);
+                    stopService(newIn);
+                    Intent returnIntent = new Intent(getApplicationContext(), SendNotif.class);
+                    setResult(RESULT_OK, returnIntent);
+                    finish();
+                }else{
+                    Toast.makeText(getApplicationContext(),"Passcode is wrong",Toast.LENGTH_SHORT).show();
+                }
             }
         });
         btnDel.setOnClickListener(new View.OnClickListener() {

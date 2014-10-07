@@ -71,18 +71,20 @@ public class Login extends AsyncTask<String,Void,String> {
         if (loading.isShowing()) {
             loading.dismiss();
         }
-        if(result.equals("OK")) {
+        result = result.trim();
+        if(result.equalsIgnoreCase("FALSE")) {
+            Toast.makeText(context, "Username or password is wrong", Toast.LENGTH_SHORT).show();
+        }else{
             prefs = context.getSharedPreferences("PULSE", Context.MODE_PRIVATE);
             editor = prefs.edit();
             editor.putString("email",em);
             editor.putString("password",pw);
+            editor.putString("passcode", result);
             editor.commit();
             ((Cover)context).changeUIwhenLogin();
             Intent i = new Intent(context, MainMenu.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(i);
-        }else{
-            Toast.makeText(context,"Username or password is wrong", Toast.LENGTH_SHORT).show();
         }
     }
 }
