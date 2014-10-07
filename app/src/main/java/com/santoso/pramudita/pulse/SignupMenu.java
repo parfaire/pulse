@@ -4,20 +4,23 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.net.Uri;
 import android.provider.Contacts;
 import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import java.net.URI;
 
 
 public class SignupMenu extends Activity {
     Button btnSUM;
     Button btnSUSE;
     Intent i;
+    private static final int CONTACT_PICKER_RESULT = 1001;
     private final int PICK = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,30 +39,53 @@ public class SignupMenu extends Activity {
         btnSUSE.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-                startActivityForResult(intent, PICK);
+                Intent intent = new Intent(Intent.ACTION_PICK, Phone.CONTENT_URI);
+                startActivityForResult(intent, CONTACT_PICKER_RESULT);
                 //i = new Intent(getApplicationContext(), SignUp.class);
                 //startActivity(i);
             }
         });
+    }
 
-//        @Override
-//        public void onActivityResult(int reqCode, final int resultCode, Intent data)
-//        {
-//            super.onActivityResult(reqCode,resultCode, data);
-//            switch (reqCode) {
-//                case (PICK) :
-//                    if (resultCode == Activity.RESULT_OK) {
-//                        URI contactData = data.getData();
-//                        Cursor c =  managedQuery(contactData, null, null, null, null);
-//                        if (c.moveToFirst()) {
-//                            String name = c.getString(c.getColumnIndexOrThrow(Contacts.People.NAME));
-//                            // TODO Whatever you want to do with the selected contact name.
-//                        }
-//                    }
-//                    break;
-//            }
+        public void onActivityResult(int reqCode, int resultCode, Intent data)
+        {
+            super.onActivityResult(reqCode,resultCode, data);
+            if(resultCode == RESULT_OK){
+                switch (reqCode){
+                    case CONTACT_PICKER_RESULT:
+                        Cursor cursor = null;
+                        String number = "";
+                        String firstName = "";
+                        String lastName = "";
+                        try{
+                            Uri result = data.getData();
+
+                            String id= result.getLastPathSegment();
+
+                            cursor = getContentResolver().query(Phone.CONTENT_URI,null, Phone._ID + " = ? ", new String[]{id},null);
+                            int numberIdx = cursor.getColumnIndex(Phone.DATA);
+                            if(cursor.moveToFirst()){
+                                number = cursor.getString((numberIdx));
+                                firstName = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME));
+                                lastName = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME));
+                            }
+                            else{
+                                // failed
+                            }
+                        } catch (Exception e){
+
+                        } finally{
+                            if (cursor != null){
+                                cursor.close();
+                            }
+                        }
+                        Log.d("TAG", number);
+                        Log.d("TAG", firstName);
+                        Log.d("TAG", lastName);
+                }
+            }
         }
+
 
 
     @Override

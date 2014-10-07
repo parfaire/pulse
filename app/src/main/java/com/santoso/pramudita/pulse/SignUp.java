@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 
 
@@ -14,6 +15,7 @@ public class SignUp extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        DatePicker dp = (DatePicker)findViewById(R.id.datePicker);
         ImageView img = (ImageView)findViewById(R.id.ivPhoto);
         img.setImageResource(R.drawable.profile_picture);
     }

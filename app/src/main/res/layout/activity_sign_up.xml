@@ -15,13 +15,14 @@ android:id="@+id/scroll">
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:gravity="center"
+        android:textSize="12dp"
         android:text="Pulse will only use your information in an emergency to assist in helping you."
         android:id="@+id/tvStatus" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="18"
+        android:ems="25"
         android:hint="First Name"
         android:id="@+id/edFirstname"
         android:layout_below="@+id/tvStatus"
@@ -30,7 +31,7 @@ android:id="@+id/scroll">
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="18"
+        android:ems="25"
         android:hint="Surname"
         android:id="@+id/edSurname"
         android:layout_below="@+id/edFirstname"
@@ -40,8 +41,9 @@ android:id="@+id/scroll">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Date :"
-        android:textSize="20dp"
+        android:layout_margin="10dp"
+        android:text="Date of Birth"
+        android:textSize="12dp"
         android:id="@+id/tvDate"/>
 
     <LinearLayout
@@ -49,59 +51,52 @@ android:id="@+id/scroll">
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <NumberPicker
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/numberPicker" />
-
-        <NumberPicker
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/numberPicker2" />
-
-        <NumberPicker
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/numberPicker3" />
+        <DatePicker
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/datePicker"
+            android:calendarViewShown="false">
+        </DatePicker>
     </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:text="Gender :"
-        android:textSize="20dp"
+        android:textSize="12dp"
         android:id="@+id/tvGender"/>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Male"
+            android:textSize="12dp"
             android:id="@+id/rbMale" />
-
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Female"
+            android:textSize="12dp"
             android:id="@+id/rbFemale" />
-
     </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:text="Pulse will send a verification number to your phone by SMS"
-        android:gravity="center"
-        android:textSize="20dp"
+        android:layout_gravity="center"
+        android:textSize="12dp"
         android:id="@+id/tvVerificationNumber"/>
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="18"
+        android:ems="25"
         android:hint="Mobile Number"
         android:id="@+id/edMobileNumber"
         android:layout_below="@+id/tvVerificationNumber"
@@ -110,7 +105,7 @@ android:id="@+id/scroll">
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="18"
+        android:ems="25"
         android:hint="Verification Number"
         android:id="@+id/edVerificationNumber"
         android:layout_below="@+id/edMobileNumber"
@@ -119,7 +114,7 @@ android:id="@+id/scroll">
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="18"
+        android:ems="25"
         android:hint="Address"
         android:id="@+id/edAddress"
         android:layout_below="@+id/edVerificationNumber"
@@ -128,7 +123,7 @@ android:id="@+id/scroll">
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="18"
+        android:ems="25"
         android:hint="Suburb"
         android:id="@+id/edSuburb"
         android:layout_below="@+id/edAddress"
@@ -137,15 +132,16 @@ android:id="@+id/scroll">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:text="Pulse contacts authorities in an emergency, and if needed your emergency contact."
         android:gravity="center"
-        android:textSize="20dp"
+        android:textSize="12dp"
         android:id="@+id/tvContact"/>
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="18"
+        android:ems="25"
         android:hint="Emergency Contact"
         android:id="@+id/edEmergencyContact"
         android:layout_below="@+id/tvContact"
@@ -154,7 +150,7 @@ android:id="@+id/scroll">
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="18"
+        android:ems="25"
         android:hint="Emergency Contact Number"
         android:id="@+id/edEmergencyNumber"
         android:layout_below="@+id/edEmergencyContact"
@@ -163,15 +159,19 @@ android:id="@+id/scroll">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:text="Authorities use your photo to recognise you in an emergency. Please choose a clear photo of your face."
         android:gravity="center"
-        android:textSize="20dp"
+        android:textSize="12dp"
         android:id="@+id/tvAuthoritiesUse"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Choose photo"
+        android:background="#FFFFFF"
+        android:textColor="#000000"
+        android:ems="25"
         android:id="@+id/btnChoosePhoto"
         android:layout_below="@+id/tvAuthoritiesUse"
         android:layout_alignParentLeft="true"/>
@@ -179,17 +179,32 @@ android:id="@+id/scroll">
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:ems="25"
         android:text="Take photo"
+        android:background="#FFFFFF"
+        android:textColor="#000000"
         android:id="@+id/btnTakePhoto"
         android:layout_below="@+id/btnChoosePhoto"
         android:layout_alignParentLeft="true"/>
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="175dp"
+        android:layout_height="175dp"
+        android:layout_gravity="center"
         android:id="@+id/ivPhoto"
         android:src="@drawable/profile_picture"
         android:layout_below="@+id/btnChoosePhoto"
+        android:layout_alignParentLeft="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="25"
+        android:text="Next"
+        android:background="#FFFFFF"
+        android:textColor="#000000"
+        android:id="@+id/btnNext"
+        android:layout_below="@+id/ivPhoto"
         android:layout_alignParentLeft="true"/>
 
 </LinearLayout>
