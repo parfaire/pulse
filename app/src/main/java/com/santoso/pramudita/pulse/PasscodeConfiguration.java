@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.santoso.pramudita.pulse.WebService.ChangePasscode;
+
 
 public class PasscodeConfiguration extends Activity {
     SharedPreferences prefs;
@@ -56,17 +58,22 @@ public class PasscodeConfiguration extends Activity {
                     old = edOld.getText().toString();
                     new1 = edNew.getText().toString();
                     new2 = edNew2.getText().toString();
-                    if(!old.equals(passcode)){
-                        Toast.makeText(ctx, "Old Passcode does not match", Toast.LENGTH_SHORT).show();
+                    if(old.length()<4 || new1.length()<4 || new2.length()<4){
+                        Toast.makeText(ctx, "Passcode length has to be 4 digits", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(!old.equals(passcode)){
+                        Toast.makeText(ctx, "Old passcode is wrong", Toast.LENGTH_SHORT).show();
                     }else if(!new1.equals(new2)){
                         Toast.makeText(ctx, "Confirmation does not match", Toast.LENGTH_SHORT).show();
+                    }else if(!old.equals(new1)) {
+                        Toast.makeText(ctx, "New passcode is the same as old one", Toast.LENGTH_SHORT).show();
                     }else {
                         Toast.makeText(ctx, "Passcode has been changed successfully!", Toast.LENGTH_SHORT).show();
                         //change passcode
                         SharedPreferences.Editor editor = prefs.edit();
                         editor.putString("passcode",new1);
                         editor.commit();
-                        //new ChangePasscode(ctx).execute(new1);
+                        new ChangePasscode(ctx).execute(new1);
                         finish();
                     }
                 }
@@ -103,7 +110,6 @@ public class PasscodeConfiguration extends Activity {
                 }else{
                     edNew2.setHint("Confirm");
                 }
-
             }
         });
     }

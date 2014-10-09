@@ -1,4 +1,4 @@
-1.cd to particular dir
+git1.cd to particular dir
 2.git init
 3.git add .		(.=all files)
 4.git commit -m message
