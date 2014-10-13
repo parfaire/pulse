@@ -43,11 +43,11 @@ public class SendNotif extends Activity implements SurfaceHolder.Callback  {
     private SurfaceView surfaceView;
     private MediaRecorder mrec = new MediaRecorder();
     private Camera mCamera;
-    private MarkerOptions mOpt;
-    private Marker marker;
-    private GoogleMap gMap;
+    public static MarkerOptions mOpt;
+    public static Marker marker;
+    public static GoogleMap gMap;
+    public static LocationManager lm;
     private Context ctx;
-    private LocationManager lm;
     private boolean isGPSEnabled,isNetworkEnabled;
     private double lat,lng;
     @Override

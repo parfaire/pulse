@@ -14,6 +14,8 @@ import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
 import com.santoso.pramudita.pulse.SendNotif;
 import com.santoso.pramudita.pulse.WebService.StartEmergency;
 import com.santoso.pramudita.pulse.WebService.StopEmergency;
@@ -104,6 +106,12 @@ public class LocationService extends Service {
             Log.e("LocListener","Location has been updated");
             lng = location.getLongitude()+"";
             lat = location.getLatitude()+"";
+            LatLng currentPlace = new LatLng(location.getLatitude(),location.getLongitude());
+
+            //SendNotif.mOpt = new MarkerOptions().position(currentPlace);
+            //SendNotif.marker = SendNotif.gMap.addMarker(mOpt);
+            SendNotif.marker.setPosition(currentPlace);
+            SendNotif.gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPlace, 15));
             new UpdateEmergencyLocation(getApplicationContext()).execute(lat,lng,logid);
         }
         @Override
