@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'PulseKey'
             keyPassword '690902'
-            storeFile file('C:/Users/Gembloth/AndroidStudioProjects/Pulse/Pulse.jks')
+            storeFile file('C:/Users/Asus/Desktop/Pulse/Pulse.jks')
             storePassword '690902'
         }
     }

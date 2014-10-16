@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 
@@ -18,8 +20,16 @@ public class SignUp extends Activity {
         DatePicker dp = (DatePicker)findViewById(R.id.datePicker);
         ImageView img = (ImageView)findViewById(R.id.ivPhoto);
         img.setImageResource(R.drawable.profile_picture);
+        EditText edFirstName = (EditText)findViewById(R.id.edFirstname);
+        EditText edSurName = (EditText)findViewById(R.id.edSurname);
+        EditText edMobileNumber = (EditText)findViewById(R.id.edMobileNumber);
+        EditText edVerificationNumber = (EditText)findViewById(R.id.edVerificationNumber);
+        EditText edAddress = (EditText)findViewById(R.id.edAddress);
+        EditText edSuburb = (EditText)findViewById(R.id.edSuburb);
+        Button btnChoosePhoto = (Button)findViewById(R.id.btnChoosePhoto);
+        Button btnTakePhoto = (Button)findViewById(R.id.btnTakePhoto);
+        Button btnNext = (Button)findViewById(R.id.btnNext);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

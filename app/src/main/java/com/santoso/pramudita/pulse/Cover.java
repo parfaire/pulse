@@ -71,17 +71,6 @@ public class Cover extends Activity {
                 return false;
             }
         });
-        edEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    edEmail.setHint("");
-                }else{
-                    edEmail.setHint("Email Address");
-                }
-
-            }
-        });
         edPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {

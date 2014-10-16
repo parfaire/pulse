@@ -7,7 +7,9 @@
     <LinearLayout
         android:background="@drawable/siren"
         android:layout_width="match_parent"
-        android:layout_height="150sp"></LinearLayout>
+        android:layout_height="150sp">
+
+        </LinearLayout>
     <TextView
         android:layout_marginTop="25dp"
         android:gravity="center"
