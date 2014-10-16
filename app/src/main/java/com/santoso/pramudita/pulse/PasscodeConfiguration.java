@@ -65,7 +65,7 @@ public class PasscodeConfiguration extends Activity {
                         Toast.makeText(ctx, "Old passcode is wrong", Toast.LENGTH_SHORT).show();
                     }else if(!new1.equals(new2)){
                         Toast.makeText(ctx, "Confirmation does not match", Toast.LENGTH_SHORT).show();
-                    }else if(!old.equals(new1)) {
+                    }else if(old.equals(new1)) {
                         Toast.makeText(ctx, "New passcode is the same as old one", Toast.LENGTH_SHORT).show();
                     }else {
                         Toast.makeText(ctx, "Passcode has been changed successfully!", Toast.LENGTH_SHORT).show();

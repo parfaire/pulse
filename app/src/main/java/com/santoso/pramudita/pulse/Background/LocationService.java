@@ -10,14 +10,13 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.santoso.pramudita.pulse.R;
 import com.santoso.pramudita.pulse.SendNotif;
-import com.santoso.pramudita.pulse.WebService.StartEmergency;
 import com.santoso.pramudita.pulse.WebService.StopEmergency;
 import com.santoso.pramudita.pulse.WebService.UpdateEmergencyLocation;
 
@@ -25,8 +24,6 @@ import com.santoso.pramudita.pulse.WebService.UpdateEmergencyLocation;
  * Created by Gembloth on 9/8/2014.
  */
 public class LocationService extends Service {
-    private Context ctx;
-    private Timer timer;
     private String lat,lng,logid;
     private NotificationManager notificationManager;
     private LocationManager lm;
@@ -35,29 +32,35 @@ public class LocationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         //TODO do something useful
-        ctx = this;
-        ss();
-        lat = intent.getStringExtra("lat");
-        lng = intent.getStringExtra("lng");
-        logid = intent.getStringExtra("logid");
-        new StartEmergency(ctx).execute(lat,lng,logid);
-        //getting GPS & Network status & update location
-        lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        isGPSEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        isNetworkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        if (isNetworkEnabled){
-            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-        }else if(isGPSEnabled){
-            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        try {
+            ss();
+            lat = intent.getStringExtra("lat");
+            lng = intent.getStringExtra("lng");
+            logid = intent.getStringExtra("logid");
+            //getting GPS & Network status & update location
+            lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            isGPSEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            isNetworkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+            if (isNetworkEnabled) {
+                lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+            } else if (isGPSEnabled) {
+                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+            }
+            /*timer = new Timer(60 * 60 * 1000, 60000);
+            timer.start();*/
+            return Service.START_STICKY;
+        }catch(Exception e){
+            e.printStackTrace();
         }
-        timer = new Timer(60*60*1000,60000);
-        timer.start();
-        return Service.START_STICKY;
+            return Service.START_STICKY;
     }
     @Override
     public void onDestroy() {
+        Log.e("LocationService","STOPPED");
         super.onDestroy();
-        lm.removeUpdates(locationListener);
+        if(lm!=null) {
+            lm.removeUpdates(locationListener);
+        }
         new StopEmergency(getApplicationContext()).execute(logid,"no");
         notificationManager.cancel(NOTIFICATION);
     }
@@ -70,7 +73,7 @@ public class LocationService extends Service {
 
     private void ss(){
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        int icon = android.R.drawable.stat_sys_headset;
+        int icon = R.drawable.ic_pulse;
         CharSequence tickerText = "Location service active!";
         long when = System.currentTimeMillis();
         Notification notification = new Notification(icon, tickerText, when);
@@ -85,33 +88,15 @@ public class LocationService extends Service {
         notificationManager.notify(NOTIFICATION, notification);
     }
 
-    private class Timer extends CountDownTimer {
-        public Timer(long millisInFuture, long countDownInterval) {
-            super(millisInFuture, countDownInterval);
-        }
-
-        @Override
-        public void onFinish(){
-            Intent i = new Intent(getApplicationContext(), LocationService.class);
-            stopService(i);
-        }
-
-        @Override
-        public void onTick(long millisUntilFinished) {
-        }
-    }
-
     private final LocationListener locationListener = new LocationListener() {
         public void onLocationChanged(Location location) {
             Log.e("LocListener","Location has been updated");
             lng = location.getLongitude()+"";
             lat = location.getLatitude()+"";
             LatLng currentPlace = new LatLng(location.getLatitude(),location.getLongitude());
-
-            //SendNotif.mOpt = new MarkerOptions().position(currentPlace);
-            //SendNotif.marker = SendNotif.gMap.addMarker(mOpt);
             SendNotif.marker.setPosition(currentPlace);
             SendNotif.gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPlace, 15));
+            Log.e("LocationService","LocationListener is running");
             new UpdateEmergencyLocation(getApplicationContext()).execute(lat,lng,logid);
         }
         @Override

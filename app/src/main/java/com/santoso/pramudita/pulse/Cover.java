@@ -23,7 +23,7 @@ import com.santoso.pramudita.pulse.WebService.Login;
 public class Cover extends Activity {
     SharedPreferences prefs;
     Button btnLogin,btnHome,btnLogout;
-    TextView tvSignUp,tvPasscode,tvInfo;
+    TextView tvSignUp,tvPasscode,tvInfo,tvLine;
     EditText edEmail,edPassword;
     LinearLayout container,containerlogin;
     Context ctx;
@@ -43,11 +43,15 @@ public class Cover extends Activity {
         btnLogout = (Button) findViewById(R.id.btnLogout);
         tvSignUp = (TextView) findViewById(R.id.tvSignUp);
         tvPasscode = (TextView) findViewById(R.id.tvPasscode);
+        tvLine = (TextView) findViewById(R.id.tvLine);
         tvInfo  = (TextView) findViewById(R.id.tvInfo);
         edEmail = (EditText) findViewById(R.id.edEmail);
         edPassword = (EditText) findViewById(R.id.edPassword);
         container = (LinearLayout) findViewById(R.id.container);
         containerlogin = (LinearLayout) findViewById(R.id.containerlogin);
+
+        tvLine.setVisibility(View.GONE);
+        tvPasscode.setVisibility(View.GONE);
 
         edEmail.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -162,13 +166,17 @@ public class Cover extends Activity {
     }
     public void changeUIwhenLogin(){
         tvInfo.setText("Welcome, "+edEmail.getText().toString());
+        tvLine.setVisibility(View.VISIBLE);
+        tvPasscode.setVisibility(View.VISIBLE);
         containerlogin.setVisibility(View.VISIBLE);
         container.setVisibility(View.GONE);
     }
 
     private void logout() {
-        container.setVisibility(View.VISIBLE);
+        tvLine.setVisibility(View.GONE);
+        tvPasscode.setVisibility(View.GONE);
         containerlogin.setVisibility(View.GONE);
+        container.setVisibility(View.VISIBLE);
         edEmail.setText("");
         edPassword.setText("");
         prefs.edit().clear().commit();

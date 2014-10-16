@@ -1,6 +1,7 @@
 package com.santoso.pramudita.pulse;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,6 +31,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.santoso.pramudita.pulse.Background.EarphoneService;
 import com.santoso.pramudita.pulse.Background.LocationService;
+import com.santoso.pramudita.pulse.WebService.StartEmergency;
 
 import java.io.IOException;
 import java.util.Date;
@@ -116,11 +118,15 @@ public class SendNotif extends Activity implements SurfaceHolder.Callback  {
             //NOTIFY THE CALL CENTER and get the ID
             prefs = getSharedPreferences("PULSE",Context.MODE_PRIVATE);
             String logid = prefs.getString("logid","");
-            Intent i= new Intent(ctx, LocationService.class);
-            i.putExtra("lat",lat+"");
-            i.putExtra("lng",lng+"");
-            i.putExtra("logid",logid);
-            startService(i);
+            //when the activity is recreate dont send the notif again by checking if the service isnt already running
+            if(!isMyServiceRunning(LocationService.class)) {
+                new StartEmergency(ctx).execute(lat + "", lng + "", logid);
+                Intent i = new Intent(ctx, LocationService.class);
+                i.putExtra("lat", lat + "");
+                i.putExtra("lng", lng + "");
+                i.putExtra("logid", logid);
+                startService(i);
+            }
         }
         @Override
         public void onProviderDisabled(String provider) {}
@@ -159,13 +165,23 @@ public class SendNotif extends Activity implements SurfaceHolder.Callback  {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==1 && resultCode==RESULT_OK){
-            if(trigger.equals("EARPHONE")) {
-                Intent i = new Intent(getApplicationContext(), EarphoneService.class);
-                startService(i);
+        try {
+            if (requestCode == 1 && resultCode == RESULT_OK) {
+                if (trigger.equals("EARPHONE")) {
+                    Intent i = new Intent(getApplicationContext(), EarphoneService.class);
+                    startService(i);
+                }
+                Intent i = new Intent(getApplicationContext(), LocationService.class);
+                stopService(i);
+                finish();
             }
+        }catch (Exception e){
             Intent i = new Intent(getApplicationContext(), LocationService.class);
             stopService(i);
+            Intent a = new Intent(Intent.ACTION_MAIN);
+            a.addCategory(Intent.CATEGORY_HOME);
+            a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(a);
             finish();
         }
     }
@@ -238,5 +254,15 @@ public class SendNotif extends Activity implements SurfaceHolder.Callback  {
         @Override
         public void onTick(long millisUntilFinished) {
         }
+    }
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -14,7 +14,7 @@
         android:layout_width="200dp"
         android:layout_height="150dp"
         android:layout_marginBottom="15dp"
-        android:src="@drawable/ic_launcher"/>
+        android:src="@drawable/itunesartwork"/>
     <LinearLayout
         android:visibility="gone"
         android:orientation="vertical"
@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:textColor="#ffffff"
             android:text="   |   "
-            android:id="@+id/textViewLine" />
+            android:id="@+id/tvLine" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
