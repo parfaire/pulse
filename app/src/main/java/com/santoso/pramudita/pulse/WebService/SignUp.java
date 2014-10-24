@@ -7,27 +7,25 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 
 /**
- * Created by Vincent on 10/13/2014.
+ * Created by Vincent on 10/14/2014.
  */
-public class UpdateProfile extends AsyncTask<String, Void, String> {
+public class SignUp extends AsyncTask<String, Void, String> {
+    private String fname, sname, email, gender, dob, mobile, address, suburb, state, country, postcode, emergencyContact, emergencyNumber;
     private Context context;
-    private String fname, sname, email, passcode, gender, dob, mobile, address, suburb, state, country, postcode, emergencyContact, emergencyNumber;
-    public UpdateProfile(Context context){
+    public SignUp(Context context){
         this.context = context;
     }
     @Override
-    protected String doInBackground(String... arg0) {
-        try {
+    protected String doInBackground(String... arg0){
+        try{
             fname = arg0[0];
             sname = arg0[1];
             email = arg0[2];
-            passcode = arg0[3];
             gender = arg0[3];
             dob = arg0[4];
             mobile = arg0[5];
@@ -38,13 +36,12 @@ public class UpdateProfile extends AsyncTask<String, Void, String> {
             postcode = arg0[10];
             emergencyContact = arg0[11];
             emergencyNumber = arg0[12];
-            String link = Connection.url + "/updateProfile.php";
+            String link = Connection.url + "/signup.php";
             URL url = new URL(link);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/d");
             String data = URLEncoder.encode("fname", "UTF-8") + "=" + URLEncoder.encode(fname, "UTF-8");
             data += "&" + URLEncoder.encode("sname", "UTF-8") + "=" + URLEncoder.encode(sname, "UTF-8");
             data += "&" + URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8");
-            data += "&" + URLEncoder.encode("passcode", "UTF-8") + "=" + URLEncoder.encode(passcode, "UTF-8");
             data += "&" + URLEncoder.encode("gender", "UTF-8") + "=" + URLEncoder.encode(gender, "UTF-8");
             data += "&" + URLEncoder.encode("dob", "UTF-8") + "=" + URLEncoder.encode(dob, "UTF-8");
             data += "&" + URLEncoder.encode("mobile", "UTF-8") + "=" + URLEncoder.encode(mobile, "UTF-8");
@@ -67,11 +64,11 @@ public class UpdateProfile extends AsyncTask<String, Void, String> {
                 sb.append(line);
                 break;
             }
+
+
         }
-        catch(Exception e){
+        catch (Exception e){
         }
         return null;
     }
-
-
 }

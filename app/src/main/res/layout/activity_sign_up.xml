@@ -38,6 +38,16 @@ android:id="@+id/scroll">
         android:layout_alignParentLeft="true">
     </EditText>
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="25"
+        android:hint="Email address"
+        android:id="@+id/edEmail"
+        android:layout_below="@+id/edSurname"
+        android:layout_alignParentLeft="true">
+    </EditText>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,23 +76,30 @@ android:id="@+id/scroll">
         android:text="Gender :"
         android:textSize="12dp"
         android:id="@+id/tvGender"/>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Male"
-            android:textSize="12dp"
-            android:id="@+id/rbMale" />
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Female"
-            android:textSize="12dp"
-            android:id="@+id/rbFemale" />
-    </LinearLayout>
+
+       <RadioGroup
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:id="@+id/radioGroup">
+           <LinearLayout
+               android:orientation="horizontal"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Male"
+                    android:textSize="12dp"
+                    android:id="@+id/rbMale" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Female"
+                    android:textSize="12dp"
+                    android:id="@+id/rbFemale" />
+           </LinearLayout>
+       </RadioGroup>
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -127,6 +144,33 @@ android:id="@+id/scroll">
         android:hint="Suburb"
         android:id="@+id/edSuburb"
         android:layout_below="@+id/edAddress"
+        android:layout_alignParentLeft="true"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="25"
+        android:hint="State"
+        android:id="@+id/edState"
+        android:layout_below="@+id/edSuburb"
+        android:layout_alignParentLeft="true"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="25"
+        android:hint="Country"
+        android:id="@+id/edCountry"
+        android:layout_below="@+id/edState"
+        android:layout_alignParentLeft="true"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="25"
+        android:hint="Postcode"
+        android:id="@+id/edPostcode"
+        android:layout_below="@+id/edCountry"
         android:layout_alignParentLeft="true"/>
 
     <TextView

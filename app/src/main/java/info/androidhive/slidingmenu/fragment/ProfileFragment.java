@@ -6,6 +6,7 @@ package info.androidhive.slidingmenu.fragment;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +18,7 @@ import com.santoso.pramudita.pulse.R;
 import com.santoso.pramudita.pulse.WebService.UpdateProfile;
 
 public class ProfileFragment extends Fragment {
-
+    SharedPreferences prefs;
     EditText edFirstname, edSurname, edDOB, edGender, edMobile, edEmail, edPasscode, edAddress, edEmergencyContact, edEmergencyNumber;
     Button btnEditProfile, btnSaveProfile, btnCancelProfile;
     Context context;
@@ -25,6 +26,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+        prefs = getSharedPreferences("PULSE", Context.MODE_PRIVATE);
         btnEditProfile = (Button)rootView.findViewById(R.id.btnEditProfile);
         btnSaveProfile = (Button)rootView.findViewById(R.id.btnSaveProfile);
         btnCancelProfile = (Button)rootView.findViewById(R.id.btnCancelProfile);
@@ -85,6 +87,10 @@ public class ProfileFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    private SharedPreferences getSharedPreferences(String pulse, int modePrivate) {
+        return null;
     }
 
     private void saveProfile(){
