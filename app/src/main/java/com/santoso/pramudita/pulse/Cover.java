@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,11 +17,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.santoso.pramudita.pulse.WebService.Login;
 
 
 public class Cover extends Activity {
+    boolean flagback;
     SharedPreferences prefs;
     Button btnLogin,btnHome,btnLogout;
     TextView tvSignUp,tvPasscode,tvInfo,tvLine;
@@ -36,6 +39,7 @@ public class Cover extends Activity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cover);
+        flagback=false;
         ctx=this;
         prefs = getSharedPreferences("PULSE", Context.MODE_PRIVATE);
         btnLogin = (Button) findViewById(R.id.btnLogin);
@@ -169,6 +173,32 @@ public class Cover extends Activity {
         edEmail.setText("");
         edPassword.setText("");
         prefs.edit().clear().commit();
+    }
+    @Override
+    public void onBackPressed() {
+        if(flagback){
+            finish();
+        }else{
+            flagback=true;
+            Toast.makeText(getApplicationContext(), "Press back once again to exit the application", Toast.LENGTH_SHORT).show();
+            MyCount timer = new MyCount(2500,1000);
+            timer.start();
+        }
+    }
+    //timer class to refresh the flagback value
+    public class MyCount extends CountDownTimer {
+        public MyCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onFinish(){
+            flagback=false;
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+        }
     }
 
 }

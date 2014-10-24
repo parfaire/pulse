@@ -91,7 +91,7 @@ public class MainMenu extends Activity {
 
             public void onDrawerOpened(View drawerView) {
                 getActionBar().hide();
-                getActionBar().setTitle(mDrawerTitle);
+                //getActionBar().setTitle(mDrawerTitle);
                 // calling onPrepareOptionsMenu() to hide action bar icons
                 invalidateOptionsMenu();
             }
@@ -126,12 +126,15 @@ public class MainMenu extends Activity {
         switch (position) {
             case 0:
                 fragment = new HomeFragment();
+                getActionBar().setIcon(R.drawable.ic_pulse);
                 break;
             case 1:
                 fragment = new ProfileFragment();
+                getActionBar().setIcon(R.drawable.ic_profile);
                 break;
             case 2:
                 fragment = new VideoFragment();
+                getActionBar().setIcon(R.drawable.ic_videos);
                 break;
             case 3:
                 Uri uriUrl = Uri.parse("http://www.google.com");
@@ -220,7 +223,7 @@ public class MainMenu extends Activity {
             finish();
         }else{
             flagback=true;
-            Toast.makeText(getApplicationContext(),"Press back once again to exit",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Press back once again to go back to home",Toast.LENGTH_SHORT).show();
             MyCount timer = new MyCount(2500,1000);
             timer.start();
         }
