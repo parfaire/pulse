@@ -20,7 +20,6 @@ public class VideoFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_video, container, false);
-
         return rootView;
     }
 }

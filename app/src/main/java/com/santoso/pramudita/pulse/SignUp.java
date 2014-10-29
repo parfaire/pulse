@@ -4,13 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,49 +23,58 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.IOException;
+import com.santoso.pramudita.pulse.WebService.SignUpWs;
+import com.santoso.pramudita.pulse.WebService.UploadFile;
+
+import java.io.InputStream;
 import java.util.Calendar;
+import java.util.Date;
 
 
 public class SignUp extends Activity {
-    SharedPreferences prefs;
-    Context context;
-    private RadioButton rButton;
+    private static final int SELECT_PHOTO = 100;
+    private Context context;
+    private EditText edPassword,edPasscode,edFirstName,edSurName,edEmail,edMobileNumber,edVerificationNumber;
+    private EditText edAddress,edSuburb,edState,edCountry,edPostcode,edEmergencyContact,edEmergencyNumber;
+    private Button btnChoosePhoto,btnTakePhoto,btnNext;
+    private RadioButton rbGender;
+    private RadioGroup rGroup;
+    private DatePicker dp;
+    private ImageView img;
     private int year, month, day;
+    private Calendar c;
+    private String photo,photoPath;
     private final static int REQUEST_CONTACTPICKER = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        prefs = getSharedPreferences("PULSE", Context.MODE_PRIVATE);
-        final DatePicker dp = (DatePicker)findViewById(R.id.datePicker);
-
-        final Calendar c = Calendar.getInstance();
+        context = this;
+        dp = (DatePicker)findViewById(R.id.datePicker);
+        c  = Calendar.getInstance();
         year = c.get(Calendar.YEAR);
         month = c.get(Calendar.MONTH);
         day = c.get(Calendar.DAY_OF_MONTH);
         dp.init(year, month,day, null);
-        ImageView img = (ImageView)findViewById(R.id.ivPhoto);
-        img.setImageResource(R.drawable.profile_picture);
-        final EditText edFirstName = (EditText)findViewById(R.id.edFirstname);
-        final EditText edSurName = (EditText)findViewById(R.id.edSurname);
-        final EditText edEmail = (EditText)findViewById(R.id.edEmail);
-        final EditText edMobileNumber = (EditText)findViewById(R.id.edMobileNumber);
-        EditText edVerificationNumber = (EditText)findViewById(R.id.edVerificationNumber);
-        final EditText edEmergencyContact = (EditText)findViewById(R.id.edEmergencyContact);
-        final EditText edEmergencyNumber = (EditText)findViewById(R.id.edEmergencyNumber);
-        final EditText edAddress = (EditText)findViewById(R.id.edAddress);
-        final EditText edSuburb = (EditText)findViewById(R.id.edSuburb);
-        final EditText edState = (EditText)findViewById(R.id.edState);
-        final EditText edCountry = (EditText)findViewById(R.id.edCountry);
-        final EditText edPostcode = (EditText)findViewById(R.id.edPostcode);
-        Button btnChoosePhoto = (Button)findViewById(R.id.btnChoosePhoto);
-        Button btnTakePhoto = (Button)findViewById(R.id.btnTakePhoto);
-        Button btnNext = (Button)findViewById(R.id.btnNext);
-        final RadioButton rbMale = (RadioButton)findViewById(R.id.rbMale);
-        RadioButton rbFemale = (RadioButton)findViewById(R.id.rbFemale);
-        final RadioGroup rGroup = (RadioGroup)findViewById(R.id.radioGroup);
+        img = (ImageView)findViewById(R.id.ivPhoto);
+        edPassword = (EditText)findViewById(R.id.edPassword);
+        edPasscode = (EditText)findViewById(R.id.edPasscode);
+        edFirstName = (EditText)findViewById(R.id.edFirstname);
+        edSurName = (EditText)findViewById(R.id.edSurname);
+        edEmail = (EditText)findViewById(R.id.edEmail);
+        edMobileNumber = (EditText)findViewById(R.id.edMobileNumber);
+        edVerificationNumber = (EditText)findViewById(R.id.edVerificationNumber);
+        edEmergencyContact = (EditText)findViewById(R.id.edEmergencyContact);
+        edEmergencyNumber = (EditText)findViewById(R.id.edEmergencyNumber);
+        edAddress = (EditText)findViewById(R.id.edAddress);
+        edSuburb = (EditText)findViewById(R.id.edSuburb);
+        edState = (EditText)findViewById(R.id.edState);
+        edCountry = (EditText)findViewById(R.id.edCountry);
+        edPostcode = (EditText)findViewById(R.id.edPostcode);
+        btnChoosePhoto = (Button)findViewById(R.id.btnChoosePhoto);
+        btnTakePhoto = (Button)findViewById(R.id.btnTakePhoto);
+        btnNext = (Button)findViewById(R.id.btnNext);
+        rGroup = (RadioGroup)findViewById(R.id.radioGroup);
 
         btnTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +86,9 @@ public class SignUp extends Activity {
         btnChoosePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // go to gallery and select picture
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, SELECT_PHOTO);
             }
         });
 
@@ -120,29 +132,76 @@ public class SignUp extends Activity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //go to passcode to choose main passcode then confirm passcode and set alternative passcode and confirm alternative passcode
-
-                String fname, sname, email, gender, dob, mobile, address, suburb, state, country, postcode, emergencyContact, emergencyNumber;
-                fname = edFirstName.getText().toString();
-                sname = edSurName.getText().toString();
-                email = edEmail.getText().toString();
-                //dob =
-
-                int selectedId = rGroup.getCheckedRadioButtonId();
-                rButton = (RadioButton)findViewById(selectedId);
-
-                gender = rButton.getText().toString();
-                mobile = edMobileNumber.getText().toString();
-                address = edAddress.getText().toString();
-                suburb = edSuburb.getText().toString();
-                state = edState.getText().toString();
-                country = edCountry.getText().toString();
-                postcode = edPostcode.getText().toString();
-                emergencyContact = edEmergencyContact.getText().toString();
-                emergencyNumber = edEmergencyNumber.getText().toString();
-                //new SignUp(context).execute(fname, sname, email, gender, dob, mobile, address, suburb, state, country, postcode, emergencyContact, emergencyNumber);
+                try {
+                    //go to passcode to choose main passcode then confirm passcode and set alternative passcode and confirm alternative passcode
+                    String password, passcode, fname, sname, email, gender, mobile, address, suburb, state, country, postcode, emergencyContact, emergencyNumber;
+                    Date dob = c.getTime();
+                    password = edPassword.getText().toString();
+                    passcode = edPasscode.getText().toString().trim();
+                    fname = edFirstName.getText().toString().trim();
+                    sname = edSurName.getText().toString().trim();
+                    photo = fname+sname+".jpg";
+                    email = edEmail.getText().toString().trim();
+                    int selectedId = rGroup.getCheckedRadioButtonId();
+                    rbGender = (RadioButton) findViewById(selectedId);
+                    gender = rbGender.getText().toString().substring(0, 1);
+                    mobile = edMobileNumber.getText().toString().trim();
+                    address = edAddress.getText().toString().trim();
+                    suburb = edSuburb.getText().toString().trim();
+                    state = edState.getText().toString().trim();
+                    country = edCountry.getText().toString().trim();
+                    postcode = edPostcode.getText().toString().trim();
+                    emergencyContact = edEmergencyContact.getText().toString().trim();
+                    emergencyNumber = edEmergencyNumber.getText().toString().trim();
+                    Log.e("A", fname + sname + email + gender + dob + mobile + address + suburb + state + country + postcode + emergencyContact + emergencyNumber);
+                    if (password.equals("") || passcode.equals("") || fname.equals("") || sname.equals("") || email.equals("") || gender.equals("") || mobile.equals("") || address.equals("") || suburb.equals("") || state.equals("") || country.equals("") || postcode.equals("") || emergencyContact.equals("") || emergencyNumber.equals("")) {
+                        Toast.makeText(context, "Please fill all the fields", Toast.LENGTH_SHORT).show();
+                    } else {
+                        new SignUpWs(context,dob).execute(fname, sname, email, gender, mobile, address, suburb, state, country, postcode, emergencyContact, emergencyNumber, photo, password, passcode);
+                        UploadFile u = new UploadFile(photoPath,photo);
+                        Toast.makeText(context, "Sign Up Successful!", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }catch(Exception ex){
+                    Log.e("SignUpError",ex.getMessage());
+                }
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
+        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+
+        switch(requestCode) {
+            case SELECT_PHOTO:
+                if(resultCode == RESULT_OK){
+                    try {
+                        Uri selectedImage = imageReturnedIntent.getData();
+                        InputStream imageStream = getContentResolver().openInputStream(selectedImage);
+                        Bitmap yourSelectedImage = BitmapFactory.decodeStream(imageStream);
+                        img.setImageBitmap(yourSelectedImage);
+
+                        //MEDIA GALLERY
+                        photoPath = getPath(selectedImage);
+
+                        Log.e("Path",photoPath);
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                }
+        }
+    }
+    //UPDATED!
+    public String getPath(Uri uri) {
+        int column_index;
+        String[] projection = { MediaStore.MediaColumns.DATA };
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+        cursor.moveToFirst();
+        //photoPath = cursor.getString(column_index);
+
+        return cursor.getString(column_index);
     }
 
     public SharedPreferences getSharedPreferences(String pulse, int modePrivate) {

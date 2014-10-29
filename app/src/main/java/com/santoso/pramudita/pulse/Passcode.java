@@ -78,7 +78,7 @@ public class Passcode extends Activity {
                     setResult(RESULT_OK, returnIntent);
                     finish();
                 }else{
-                    Toast.makeText(getApplicationContext(),"Passcode is wrong",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Passcode is wrong "+passcode,Toast.LENGTH_SHORT).show();
                 }
             }
         });

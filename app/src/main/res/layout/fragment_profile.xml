@@ -40,7 +40,6 @@
                 android:ems="18"
                 android:text="Sarah"
                 android:layout_gravity="left"
-                android:focusable="false"
                 android:textColor="#428CFF"
                 android:textSize="12dp"
                 android:id="@+id/edFirstname"
@@ -64,7 +63,6 @@
                 android:ems="18"
                 android:text="Example"
                 android:layout_gravity="left"
-                android:focusable="false"
                 android:textColor="#428CFF"
                 android:textSize="12dp"
                 android:id="@+id/edSurname"
@@ -88,7 +86,6 @@
                 android:ems="18"
                 android:text="16-August-2000"
                 android:layout_gravity="left"
-                android:focusable="false"
                 android:textColor="#428CFF"
                 android:textSize="12dp"
                 android:id="@+id/edDob"
@@ -112,7 +109,6 @@
                 android:ems="18"
                 android:text="Female "
                 android:layout_gravity="left"
-                android:focusable="false"
                 android:textColor="#428CFF"
                 android:textSize="12dp"
                 android:id="@+id/edGender"
@@ -135,7 +131,6 @@
                 android:layout_height="wrap_content"
                 android:ems="18"
                 android:text="0432 876 453"
-                android:focusable="false"
                 android:layout_gravity="left"
                 android:textColor="#428CFF"
                 android:textSize="12dp"
@@ -161,33 +156,8 @@
                 android:text="Sarah@example.com"
                 android:layout_gravity="left"
                 android:textColor="#428CFF"
-                android:focusable="false"
                 android:textSize="12dp"
                 android:id="@+id/edEmail"
-                android:layout_alignParentLeft="true"/>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_margin="5dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Passcode "
-                android:layout_gravity="right"
-                android:textSize="12dp"
-                android:id="@+id/tvPasscode"/>
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="18"
-                android:text="6734"
-                android:layout_gravity="left"
-                android:focusable="false"
-                android:textColor="#428CFF"
-                android:textSize="12dp"
-                android:id="@+id/edPasscode"
                 android:layout_alignParentLeft="true"/>
         </TableRow>
 
@@ -208,7 +178,6 @@
                 android:ems="18"
                 android:text="13 Main St"
                 android:layout_gravity="left"
-                android:focusable="false"
                 android:textColor="#428CFF"
                 android:textSize="12dp"
                 android:id="@+id/edAddress"
@@ -232,7 +201,6 @@
                 android:ems="18"
                 android:text="John Example"
                 android:layout_gravity="left"
-                android:focusable="false"
                 android:textColor="#428CFF"
                 android:textSize="12dp"
                 android:id="@+id/edEmergencyContact"
@@ -256,7 +224,6 @@
                 android:ems="18"
                 android:text="9876 4532"
                 android:layout_gravity="left"
-                android:focusable="false"
                 android:textColor="#428CFF"
                 android:textSize="12dp"
                 android:id="@+id/edEmergencyNumber"
@@ -274,15 +241,13 @@
                 android:layout_gravity="right"
                 android:textSize="12dp"
                 android:id="@+id/tvPhoto"/>
-            <TextView
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="18"
                 android:text="Change"
-                android:layout_gravity="left"
-                android:textColor="#428CFF"
-                android:textSize="12dp"
-                android:id="@+id/tvChange"
+                android:textSize="15dp"
+                android:id="@+id/btnChange"
+                android:visibility="gone"
                 android:layout_alignParentLeft="true"/>
         </TableRow>
 
@@ -296,13 +261,14 @@
                 android:layout_height="175dp"
                 android:id="@+id/ivPhoto"
                 android:layout_gravity="left"
-                android:src="@drawable/profile_picture"
+                android:src="@drawable/ic_profile"
                 android:layout_alignParentLeft="true"/>
         </TableRow>
 
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:visibility="gone"
             android:layout_margin="5dp">
             <TextView
                 android:layout_width="wrap_content"
@@ -319,41 +285,41 @@
                 android:layout_gravity="left"
                 android:textColor="#428CFF"
                 android:textSize="12dp"
-                android:focusable="false"
                 android:id="@+id/tvSubscriptionInfo"
                 android:layout_alignParentLeft="true"/>
         </TableRow>
-
+    </TableLayout>
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Edit Profile"
+            android:visibility="gone"
             android:textSize="12dp"
             android:id="@+id/btnEditProfile"/>
 
-        <TableRow>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
             <Button
-                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:text="       Cancel        "
+                android:text="Cancel"
                 android:textSize="12dp"
-                android:enabled="false"
-
+                android:visibility="invisible"
                 android:id="@+id/btnCancelProfile"/>
 
             <Button
+                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Save Profile"
-                android:ems="19"
                 android:textSize="12dp"
-                android:enabled="false"
-
+                android:visibility="invisible"
                 android:id="@+id/btnSaveProfile"/>
-        </TableRow>
-
-        </TableLayout>
+        </LinearLayout>
     </LinearLayout>
 
 </ScrollView>

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.santoso.pramudita.pulse.Cover;
@@ -47,7 +48,7 @@ public class Login extends AsyncTask<String,Void,String> {
             URL url = new URL(link);
             String data = URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(em, "UTF-8");
             data += "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(pw, "UTF-8");
-            URLConnection conn = url.openConnection();
+             URLConnection conn = url.openConnection();
             conn.setDoOutput(true);
             OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
             wr.write(data);
@@ -79,7 +80,18 @@ public class Login extends AsyncTask<String,Void,String> {
             editor = prefs.edit();
             editor.putString("email",em);
             editor.putString("password",pw);
-            editor.putString("passcode", result);
+            Log.e("A",result);
+            String[] data = result.split(",");
+            editor.putString("fname", data[0]);
+            editor.putString("lname", data[1]);
+            editor.putString("dob", data[2]);
+            editor.putString("gender", data[3]);
+            editor.putString("mobile", data[4]);
+            editor.putString("address",data[5]);
+            editor.putString("econtact",data[6]);
+            editor.putString("enumb", data[7]);
+            editor.putString("passcode", data[8]);
+            editor.putString("picture", data[9]);
             editor.commit();
             ((Cover)context).changeUIwhenLogin();
             Intent i = new Intent(context, MainMenu.class);

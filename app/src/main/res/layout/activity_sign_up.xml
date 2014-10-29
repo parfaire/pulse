@@ -48,6 +48,30 @@ android:id="@+id/scroll">
         android:layout_alignParentLeft="true">
     </EditText>
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="25"
+        android:hint="Password"
+        android:password="true"
+        android:id="@+id/edPassword"
+        android:layout_below="@+id/edEmail"
+        android:layout_alignParentLeft="true">
+    </EditText>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="25"
+        android:hint="Passcode"
+        android:password="true"
+        android:numeric="integer"
+        android:maxLength="4"
+        android:id="@+id/edPasscode"
+        android:layout_below="@+id/edPassword"
+        android:layout_alignParentLeft="true">
+    </EditText>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -78,14 +102,13 @@ android:id="@+id/scroll">
         android:id="@+id/tvGender"/>
 
        <RadioGroup
+           android:orientation="horizontal"
            android:layout_width="fill_parent"
            android:layout_height="wrap_content"
-           android:id="@+id/radioGroup">
-           <LinearLayout
-               android:orientation="horizontal"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content">
+           android:id="@+id/radioGroup"
+           android:checkedButton="@+id/rbMale">
                 <RadioButton
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Male"
@@ -97,9 +120,7 @@ android:id="@+id/scroll">
                     android:text="Female"
                     android:textSize="12dp"
                     android:id="@+id/rbFemale" />
-           </LinearLayout>
        </RadioGroup>
-
 
     <TextView
         android:layout_width="wrap_content"
@@ -210,12 +231,11 @@ android:id="@+id/scroll">
         android:id="@+id/tvAuthoritiesUse"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="Choose photo"
-        android:background="#FFFFFF"
         android:textColor="#000000"
-        android:ems="25"
         android:id="@+id/btnChoosePhoto"
         android:layout_below="@+id/tvAuthoritiesUse"
         android:layout_alignParentLeft="true"/>
@@ -228,6 +248,7 @@ android:id="@+id/scroll">
         android:background="#FFFFFF"
         android:textColor="#000000"
         android:id="@+id/btnTakePhoto"
+        android:visibility="gone"
         android:layout_below="@+id/btnChoosePhoto"
         android:layout_alignParentLeft="true"/>
 
@@ -236,16 +257,15 @@ android:id="@+id/scroll">
         android:layout_height="175dp"
         android:layout_gravity="center"
         android:id="@+id/ivPhoto"
-        android:src="@drawable/profile_picture"
+        android:src="@drawable/ic_profile"
         android:layout_below="@+id/btnChoosePhoto"
         android:layout_alignParentLeft="true"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_width="300sp"
         android:layout_height="wrap_content"
-        android:ems="25"
-        android:text="Next"
-        android:background="#FFFFFF"
+        android:text="Sign Up"
         android:textColor="#000000"
         android:id="@+id/btnNext"
         android:layout_below="@+id/ivPhoto"
